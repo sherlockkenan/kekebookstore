@@ -1,10 +1,12 @@
 package entity;
 
 public class OrderItem {
+	
 	private String id;
 	private Book book;
 	private int quantity;
 	private double price;
+	private Order order;
 	
 	
 	public String getId() {
@@ -31,6 +33,11 @@ public class OrderItem {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	
+	public Order getOrder() {
+		return order;
+	}
+	public void setOrder(Order order) {
+		this.order = order;
+	}
 	
 }

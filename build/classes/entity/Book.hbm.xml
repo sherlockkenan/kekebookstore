@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-5-29 19:45:23 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="entity.Book" table="book">
+        <id name="id" type="java.lang.String">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="name" />
+        </property>
+        <property name="author" type="java.lang.String">
+            <column name="author" />
+        </property>
+        <property name="price" type="double">
+            <column name="price" />
+        </property>
+        <property name="image" type="java.lang.String">
+            <column name="image" />
+        </property>
+        <property name="description" type="java.lang.String">
+            <column name="description" />
+        </property>
+        <property name="category_id" type="java.lang.String">
+            <column name="category_id" />
+        </property>
+    </class>
+</hibernate-mapping>

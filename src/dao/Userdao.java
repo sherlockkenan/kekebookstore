@@ -5,18 +5,24 @@ import java.util.List;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.engine.spi.SessionEventListenerManager;
 
-import util.jdbcutils;
+import util.GetSessionFactory;
 import entity.User;
+import sun.security.timestamp.TSRequest;
 
 public class Userdao{
 
 	public void add(User user){
 		try{
-			QueryRunner runner = new QueryRunner(jdbcutils.getDataSource());
-			String sql = "insert into user(id,username,password,phone,address,email,role) values(?,?,?,?,?,?,?)";
-			Object params[] = {user.getId(), user.getUsername(), user.getPassword(), user.getPhone(), user.getAddress(), user.getEmail(), user.getRole()};
-			runner.update(sql, params);
+			Session session=GetSessionFactory.getSession();
+			Transaction ts= session.beginTransaction();
+			session.save(user);
+			ts.commit();
+			session.close();
 		} catch(Exception e){
 			throw new RuntimeException(e);
 		}
@@ -25,9 +31,19 @@ public class Userdao{
 
 	public User find(String id){
 		try{
-			QueryRunner runner = new QueryRunner(jdbcutils.getDataSource());
-			String sql = "select * from user where id=?";
-			return (User)runner.query(sql,new BeanHandler(User.class),id);
+			//QueryRunner runner = new QueryRunner(jdbcutils.getDataSource());
+			
+			//return (User)runner.query(sql,new BeanHandler(User.class),id);
+			Session session=GetSessionFactory.getSession();
+			Transaction ts= session.beginTransaction();
+			String sql = "from User where id=?";
+			Query query=session.createQuery(sql);
+			query.setString(0, id);
+			User user=(User)query.uniqueResult();
+			ts.commit();
+			session.close();
+			
+			return user;
 		} catch(Exception e){
 			throw new RuntimeException(e);
 		}
@@ -35,39 +51,67 @@ public class Userdao{
 	
 	public User search(String username){
 		try{
-			QueryRunner runner = new QueryRunner(jdbcutils.getDataSource());
-			String sql = "select * from user where username=?";
-			return (User)runner.query(sql,new BeanHandler(User.class),username);
+			//QueryRunner runner = new QueryRunner(jdbcutils.getDataSource());
+			//String sql = "select * from user where username=?";
+			//return (User)runner.query(sql,new BeanHandler(User.class),username);
+			
+			Session session=GetSessionFactory.getSession();
+			Transaction ts= session.beginTransaction();
+			String sql = "from User as user where user.username=?";
+			Query query=session.createQuery(sql);
+			query.setString(0, username);
+			User user=(User)query.uniqueResult();
+			ts.commit();
+			session.close();
+			return user;
+		
 		} catch(Exception e){
 			throw new RuntimeException(e);
 		}
 	}
 	public User find(String username, String password){
 		try{
-			QueryRunner runner = new QueryRunner(jdbcutils.getDataSource());
-			String sql = "select * from user where username=? and password=?";
-			Object params[] = {username, password};
-			return (User)runner.query(sql, new BeanHandler(User.class), params);
+
+			Session session=GetSessionFactory.getSession();
+			Transaction ts= session.beginTransaction();
+			String sql = "from User where username=? and password=?";
+			Query query=session.createQuery(sql);
+			query.setString(0, username);
+			query.setString(1, password);
+			User user=(User)query.uniqueResult();
+			ts.commit();
+			session.close();
+			
+			return user;
+			
 		} catch(Exception e){
 			throw new RuntimeException(e);
 		}
 	}
 	public void delete(String id){
 		try{
-			QueryRunner runner = new QueryRunner(jdbcutils.getDataSource());
-			String sql = "delete from user where id=?";
-			Object params[]={id};
-			runner.update(sql,params);
+			//find the student
+			Session session=GetSessionFactory.getSession();
+			Transaction ts= session.beginTransaction();
+			String sql = "from User where id=?";
+			Query query=session.createQuery(sql);
+			query.setString(0,id);
+			//delete the student
+			User user=(User)query.uniqueResult();
+			session.delete(user);
+			ts.commit();
+			session.close();
 		} catch(Exception e){
 			throw new RuntimeException(e);
 		}
 	}
 	public void update(User user){
 		try{
-			QueryRunner runner = new QueryRunner(jdbcutils.getDataSource());
-			String sql = "update user set username=?,password=?,phone=?,address=?,email=?,role=?where id=?";
-			Object params[] = { user.getUsername(), user.getPassword(), user.getPhone(), user.getAddress(), user.getEmail(), user.getRole(),user.getId()};
-			runner.update(sql, params);
+			Session session=GetSessionFactory.getSession();
+			Transaction ts= session.beginTransaction();
+			session.update(user);
+			ts.commit();
+			session.close();
 		} catch(Exception e){
 			throw new RuntimeException(e);
 		}
@@ -77,9 +121,15 @@ public class Userdao{
 	
     public List<User> getall() {
 	   try{
-			QueryRunner runner = new QueryRunner(jdbcutils.getDataSource());
-			String sql = "select * from user" ;
-			return (List<User>)runner.query(sql, new BeanListHandler(User.class));
+			
+			Session session=GetSessionFactory.getSession();
+			Transaction ts= session.beginTransaction();
+			String sql = "from User ";
+			Query query=session.createQuery(sql);
+			List<User> user=(List<User>)query.list();
+			ts.commit();
+			session.close();
+			return user;
 		} catch(Exception e){
 			throw new RuntimeException(e);
 		}   

@@ -1,35 +1,44 @@
 package dao;
 
-import java.sql.SQLException;
+
 import java.util.List;
 
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.apache.commons.dbutils.handlers.ScalarHandler;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import entity.Book;
-import util.jdbcutils;
+
+import util.GetSessionFactory;
+
 
 public class Bookdao {
 	public void add(Book book){
 		try {
-			QueryRunner runner = new QueryRunner(jdbcutils.getDataSource());
-			String sql = "insert into book(id,name,author,price,image,description,category_id) values(?,?,?,?,?,?,?)";
-			Object params[] = {book.getId(), book.getName(), book.getAuthor(), book.getPrice(), book.getImage(), book.getDescription(), book.getCategory_id()};
-			runner.update(sql, params);
-		} catch (SQLException e) {
+			Session session=GetSessionFactory.getSession();
+			Transaction ts= session.beginTransaction();
+			session.save(book);
+			ts.commit();
+			session.close();
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 	}
 	public void delete(String book_id){
 		try {
-			QueryRunner runner = new QueryRunner(jdbcutils.getDataSource());
-			String sql = "delete from book where id=?";
-			Object params[] = {book_id};
-			runner.update(sql, params);
-		} catch (SQLException e) {
+			Session session=GetSessionFactory.getSession();
+			Transaction ts= session.beginTransaction();
+			String sql = "from Book where id=?";
+			Query query=session.createQuery(sql);
+			query.setString(0,book_id);
+			//delete the book
+			Book book=(Book)query.uniqueResult();
+			session.delete(book);
+			ts.commit();
+			session.close();
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -40,10 +49,16 @@ public class Bookdao {
 	 */
 	public Book find(String id){
 		try {
-			QueryRunner runner = new QueryRunner(jdbcutils.getDataSource());
-			String sql = "select * from book where id=?";
-			return (Book)runner.query(sql, new BeanHandler(Book.class), id);
-		} catch (SQLException e) {
+			Session session=GetSessionFactory.getSession();
+			Transaction ts= session.beginTransaction();
+			String sql = "from Book where id=?";
+			Query query=session.createQuery(sql);
+			query.setString(0, id);
+			Book book=(Book)query.uniqueResult();
+			ts.commit();
+			session.close();
+			return book;
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
@@ -51,10 +66,16 @@ public class Bookdao {
 	
 	public List<Book> getPageData(int startindex, int pagesize){
 		try {
-			QueryRunner runner = new QueryRunner(jdbcutils.getDataSource());
-			String sql = "select * from book limit ?,?";
-			Object params[] = {startindex, pagesize};
-			return (List<Book>)runner.query(sql, new BeanListHandler(Book.class), params);
+			Session session=GetSessionFactory.getSession();
+			Transaction ts= session.beginTransaction();
+			String sql = "from Book";
+			Query query=session.createQuery(sql);
+			query.setFirstResult(startindex);
+			query.setMaxResults(pagesize);
+			List<Book> book=(List<Book>)query.list();
+			ts.commit();
+			session.close();
+			return book;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
@@ -63,10 +84,14 @@ public class Bookdao {
 	
 	public int getTotalRecord(){
 		try {
-			QueryRunner runner = new QueryRunner(jdbcutils.getDataSource());
-			String sql = "select count(*) from book";
-			long totalrecord = (Long)runner.query(sql, new ScalarHandler());
-			return (int)totalrecord;
+			Session session=GetSessionFactory.getSession();
+			Transaction ts= session.beginTransaction();
+			String sql = "from Book";
+			Query query=session.createQuery(sql);
+			int totalrecord=query.list().size();
+			ts.commit();
+			session.close();
+			return totalrecord;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
@@ -78,10 +103,18 @@ public class Bookdao {
 	 */
 	public List<Book> getPageData(int startindex, int pagesize, String category_id){
 		try {
-			QueryRunner runner = new QueryRunner(jdbcutils.getDataSource());
-			String sql = "select * from book where category_id=? limit ?,?";
-			Object params[] = {category_id, startindex, pagesize};
-			return (List<Book>)runner.query(sql, new BeanListHandler(Book.class), params);
+			
+			Session session=GetSessionFactory.getSession();
+			Transaction ts= session.beginTransaction();
+			String sql = "from Book where category_id=?";
+			Query query=session.createQuery(sql);
+			query.setString(0,category_id);
+			query.setFirstResult(startindex);
+			query.setMaxResults(pagesize);
+			List<Book> book=(List<Book>)query.list();
+			ts.commit();
+			session.close();
+			return book;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
@@ -90,10 +123,15 @@ public class Bookdao {
 	
 	public int getTotalRecord(String category_id){
 		try {
-			QueryRunner runner = new QueryRunner(jdbcutils.getDataSource());
-			String sql = "select count(*) from book where category_id=?";
-			long totalrecord = (Long)runner.query(sql, new ScalarHandler(), category_id);
-			return (int)totalrecord;
+			Session session=GetSessionFactory.getSession();
+			Transaction ts= session.beginTransaction();
+			String sql = "from Book where category_id=?";
+			Query query=session.createQuery(sql);
+			query.setString(0,category_id);
+			int totalrecord=query.list().size();
+			ts.commit();
+			session.close();
+			return totalrecord;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);

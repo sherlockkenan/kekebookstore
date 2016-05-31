@@ -1,58 +1,67 @@
 package dao;
 
-import java.sql.SQLException;
+
 import java.util.List;
 
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.apache.commons.dbutils.handlers.BeanListHandler;
 
-import util.jdbcutils;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import util.GetSessionFactory;
+
 import entity.Category;
-import entity.User;
+
 
 public class CategoryDao {
 	
-	/* (non-Javadoc)
-	 * @see dao.impl.CategoryDao#add(domain.Category)
-	 */
+	
 	public void add(Category category){
 		try{
-			QueryRunner runner = new QueryRunner(jdbcutils.getDataSource());
-			String sql = "insert into category(id,name,description) values(?,?,?)";
-			Object params[] = {category.getId(), category.getName(), category.getDescription()};
-			runner.update(sql, params);
+			Session session=GetSessionFactory.getSession();
+			Transaction ts= session.beginTransaction();
+			session.save(category);
+			ts.commit();
+			session.close();
 		} catch(Exception e){
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see dao.impl.CategoryDao#find(java.lang.String)
-	 */
+
 
 	public Category find(String id){
 		try {
-			QueryRunner runner = new QueryRunner(jdbcutils.getDataSource());
-			String sql = "select * from category where id=?";
-			return (Category)runner.query(sql, new BeanHandler(Category.class), id);
-		} catch (SQLException e) {			
+		
+			Session session=GetSessionFactory.getSession();
+			Transaction ts= session.beginTransaction();
+			String sql = "from Category where id=?";
+			Query query=session.createQuery(sql);
+			query.setString(0, id);
+			Category category=(Category)query.uniqueResult();
+			ts.commit();
+			session.close();
+			return category;
+		} catch (Exception e) {			
 			e.printStackTrace();
 			throw new RuntimeException(e); 
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see dao.impl.CategoryDao#getAll()
-	 */
+	
 
 	public List<Category> getAll(){
 		try {
-			QueryRunner runner = new QueryRunner(jdbcutils.getDataSource());
-			String sql = "select * from category";
-			return (List<Category>)runner.query(sql, new BeanListHandler(Category.class));
-		} catch (SQLException e) {			
+			Session session=GetSessionFactory.getSession();
+			Transaction ts= session.beginTransaction();
+			String sql = "from Category";
+			Query query=session.createQuery(sql);
+			List<Category> category=(List<Category>)query.list();
+			ts.commit();
+			session.close();
+			return category;
+		} catch (Exception e) {			
 			e.printStackTrace();
 			throw new RuntimeException(e); 
 		}
@@ -61,10 +70,16 @@ public class CategoryDao {
 	
 	public void delete(String id){
 		try{
-			QueryRunner runner = new QueryRunner(jdbcutils.getDataSource());
-			String sql = "delete from category where id=?";
-			Object params[]={id};
-			runner.update(sql,params);
+			Session session=GetSessionFactory.getSession();
+			Transaction ts= session.beginTransaction();
+			String sql = "from Category where id=?";
+			Query query=session.createQuery(sql);
+			query.setString(0,id);
+			//delete the student
+			Category category=(Category)query.uniqueResult();
+			session.delete(category);
+			ts.commit();
+			session.close();
 		} catch(Exception e){
 			throw new RuntimeException(e);
 		}
@@ -73,10 +88,11 @@ public class CategoryDao {
 	
 	public void update(Category category){
 		try{
-			QueryRunner runner = new QueryRunner(jdbcutils.getDataSource());
-			String sql = "update category set name=?,description=? where id=?";
-			Object params[] = {category.getName(),category.getDescription(),category.getId()};
-			runner.update(sql, params);
+			Session session=GetSessionFactory.getSession();
+			Transaction ts= session.beginTransaction();
+			session.update(category);
+			ts.commit();
+			session.close();
 		} catch(Exception e){
 			throw new RuntimeException(e);
 		}

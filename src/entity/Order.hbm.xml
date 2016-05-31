@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-5-29 19:45:23 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="entity.Order" table="orders">
+        <id name="id" type="java.lang.String">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="ordertime" type="java.util.Date">
+            <column name="ordertime" />
+        </property>
+        <property name="price" type="double">
+            <column name="price" />
+        </property>
+        <property name="state" type="boolean">
+            <column name="state" />
+        </property>
+        <many-to-one name="user" class="entity.User" fetch="select" lazy="false">
+            <column name="user_id" />
+        </many-to-one>
+        <set name="orderitems" table="orderitem" inverse="false" cascade="all" lazy="false">
+            <key>
+                <column name="order_id" />
+            </key>
+            <one-to-many class="entity.OrderItem" />
+        </set>
+    </class>
+</hibernate-mapping>
