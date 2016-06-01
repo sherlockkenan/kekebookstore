@@ -1,1 +1,7 @@
-/hibernate.cfg.xml
+/admin/
+/client/
+/dao/
+/entity/
+/filter/
+/service/
+/util/
