@@ -58,7 +58,7 @@
            <li><a href="#" style=" font-size: 20px;">Catergory</a>
            <c:forEach var="category" items="${categories }">
     	  <li>
-	       <a href="${pageContext.request.contextPath }/client/index?method=Category&category_id=${category.id}">${category.name}</a>
+	       <a href="${pageContext.request.contextPath }/client/index_Category?category_id=${category.id}">${category.name}</a>
 	       </li>
 	    </c:forEach>
 	    </ul>
@@ -78,7 +78,7 @@
     							<li>作者：${book.author }</li>
     							<li>售价：${book.price }</li>
     							<li>
-    								<a href="${pageContext.request.contextPath }/client/addcart?method=add&bookid=${book.id}">加入购物车</a>
+    								<a href="${pageContext.request.contextPath }/client/cart_add?bookid=${book.id}">加入购物车</a>
     							</li>
     						</ul>
     					</div>
@@ -90,7 +90,7 @@
     		<div id="page" style="margin-top:20px; text-align:center;">
     			当前第[${page.pagenum }]页 &nbsp;&nbsp;
 			    <c:forEach var="pagenum" begin="${page.startpage }" end="${page.endpage }">
-			    	[<a href="${pageContext.request.contextPath }/client/index?method=page&pagenum=${pagenum}&category_id=${param.category_id}">${pagenum }</a>]
+			    	[<a href="${pageContext.request.contextPath }/client/index?pagenum=${pagenum}&category_id=${param.category_id}">${pagenum }</a>]
 			    </c:forEach>
 			    &nbsp;&nbsp;
 			    总共[${page.totalpage }]页，共[${page.totalrecord }]条记录

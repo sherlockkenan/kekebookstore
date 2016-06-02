@@ -26,7 +26,7 @@
 				<li><a href="${pageContext.request.contextPath }/client/order" target="body">Orders</a></li>
 				<li><c:if test="${user!=null }">
 	    	                  <li><a>Welcome:${user.username } </a></li>
-	    	                  <li><a href="${pageContext.request.contextPath }/client/logout">Sign out</a></li>
+	    	                  <li><a href="${pageContext.request.contextPath }/logout">Sign out</a></li>
 	                </c:if>
 	                <c:if test="${user== null}">
 	                <li><a href="${pageContext.request.contextPath }/client/login.jsp">Sign in</a></li>

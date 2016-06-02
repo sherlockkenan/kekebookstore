@@ -38,10 +38,10 @@
     </ul>
     <ul class="nav navbar-nav navbar-right">
     <li><a href="${pageContext.request.contextPath }/client/cart.jsp" target="body">Cart</a></li>
-	 <li><a href="${pageContext.request.contextPath }/client/order" target="body">Orders</a></li>
+	 <li><a href="${pageContext.request.contextPath }/client/order_list" target="body">Orders</a></li>
     <c:if test="${user!=null }">
        <li><a>Welcome:${user.username } </a></li>
-       <li><a href="${pageContext.request.contextPath }/client/logout">Sign out</a></li>
+       <li><a href="${pageContext.request.contextPath }/logout">Sign out</a></li>
 	</c:if>
 	 <c:if test="${user== null}">
 	 <li><a href="${pageContext.request.contextPath }/client/login.jsp"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>

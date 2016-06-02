@@ -42,7 +42,7 @@
 	 <li><a href="${pageContext.request.contextPath }/client/order" target="right">Orders</a></li>
     <c:if test="${user!=null }">
        <li><a>Welcome:${user.username } </a></li>
-       <li><a href="${pageContext.request.contextPath }/client/logout" target="right">Sign out</a></li>
+       <li><a href="${pageContext.request.contextPath }/logout" target="right">Sign out</a></li>
 	</c:if>
 	 <c:if test="${user== null}">
 	 <li><a href="${pageContext.request.contextPath }/client/login.jsp" target="right"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>

@@ -33,7 +33,7 @@
 	    		<td>${me.value.quantity }</td>
 	    		<td>${me.value.price }</td>
 	    		<td>
-	    			<a href="${pageContext.request.contextPath }/client/addcart?method=delete&bookid=${me.value.book.id}">Delete</a>
+	    			<a href="${pageContext.request.contextPath }/client/cart_delete?bookid=${me.value.book.id}">Delete</a>
 	    		</td>
     		</tr>
     	</c:forEach>
@@ -43,7 +43,7 @@
     		<td colspan="5">${cart.price }</td>
     	</tr>
 	</table>
-	<a href="${pageContext.request.contextPath }/client/createorder">Buy</a>
+	<a href="${pageContext.request.contextPath }/client/order_create">Buy</a>
 
    </body>
 

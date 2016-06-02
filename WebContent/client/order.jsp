@@ -34,7 +34,7 @@
 	    		<td>${order.price }</td>
 	    		<td>${order.state==true?'Confirm':'Uncomfirm' }</td>
 	    		<td>
-	    			<a href="${pageContext.request.contextPath }/client/orderdetail?order_id=${order.id}">More</a>
+	    			<a href="${pageContext.request.contextPath }/client/order_detail?order_id=${order.id}">More</a>
 	    		</td>
     		</tr>
     	</c:forEach>  	

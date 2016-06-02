@@ -6,18 +6,54 @@
 <struts>
 
 	<constant name="struts.devMode" value="true" />
-
-	<package name="client" extends="struts-default" >
-
-		<action name="login" class="client.LoginAction"
-			method="execute">
+    
+	<package name="user" extends="struts-default" >
+        <global-results>
+           <result name="error">/message.jsp</result>
+        </global-results>  
+       
+		<action name="login" class="client.LoginAction">
 			<result name="client" type="redirect">/client/index.jsp</result>
 			<result name="admin" type="redirect">/admin/index.jsp</result>
-			<result name="error">/message.jsp</result>
+			
+		</action>
+		
+		<action name="register" class="client.RegisterAction">
+			<result name="success" >/message.jsp</result>
 		</action>
 
-	
+	    <action name="logout" class="client.LoginAction" method="logout">
+			<result name="success" type="redirect">/client/index.jsp</result>
+		</action>
 
 	</package>
+	
+	
+	<package name="client" extends="struts-default" namespace="/client">
+        <global-results>
+            <result name="error">/message.jsp</result>
+        </global-results> 
+        
+         <action name="index" class="client.IndexAction">
+			<result >/client/index.jsp</result>			
+		</action>
+		
+        <action name="index_*" method="{1}" class="client.IndexAction">
+			<result>/client/index.jsp</result>			
+		</action>
+		
+		 <action name="cart_*" method="{1}" class="client.CartAction">
+			<result>/client/cart.jsp</result>			
+		</action>
+		
+		 <action name="order_*" method="{1}" class="client.OrderAction">
+			<result name="create" type="redirect">/client/order_list</result>	
+			<result name="detail">/client/orderdetail.jsp</result>	
+			<result name="list">/client/order.jsp</result>			
+		</action>
+    
+    
+    
+    </package>
 
 </struts>
