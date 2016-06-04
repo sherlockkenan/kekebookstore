@@ -7,7 +7,7 @@
   </head>
   
   <body>
-  <form action="${pageContext.request.contextPath }/admin/book?method=add" method="post" enctype="multipart/form-data" align="center">
+  <form action="${pageContext.request.contextPath }/admin/book_add" method="post" enctype="multipart/form-data" align="center">
     <table frame="border" width="50%" align="center">
     	<tr>
     		<td>图书名称</td>
@@ -30,7 +30,7 @@
     	<tr>
     		<td>图片</td>
     		<td>
-    			<input type="file" name="file">
+    			<input type="file" name="upload">
     		</td>
     	</tr>
     	<tr>

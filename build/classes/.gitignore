@@ -5,3 +5,6 @@
 /filter/
 /service/
 /util/
+/client.xml
+/struts.xml
+/admin.xml

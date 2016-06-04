@@ -1,9 +1,0 @@
-diff a/WebContent/admin/left.jsp b/WebContent/admin/left.jsp	(rejected hunks)
-@@ -3,7 +3,6 @@
- <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
- <html>
-   <head>  
--    <style >
-     <title></title>
-     	.menu{
-     		display:none;

@@ -11,10 +11,10 @@
     <script type="text/javascript">
         $(function(){
             $('#dg').edatagrid({
-            	url: 'user?method=getall',
-				saveUrl: 'user?method=create',
-				updateUrl: 'user?method=update',
-				destroyUrl: 'user?method=delete'
+            	url: 'user_get',
+				saveUrl: 'user_create',
+				updateUrl: 'user_update',
+				destroyUrl: 'user_delete'
             });
         });
     </script>

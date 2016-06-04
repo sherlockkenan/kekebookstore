@@ -11,6 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.struts2.ServletActionContext;
+
+import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
+
+import entity.Book;
 import entity.User;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -18,15 +24,14 @@ import service.Service;
 
 
 /**
- * Servlet implementation class UserServlet
+ * Servlet implementation class UserAction
  */
-@WebServlet("/admin/user")
-public class UserServlet extends HttpServlet {
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+public class UserAction extends ActionSupport {
+
+	private static final long serialVersionUID = 1L;
+	
+	/*protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
 		String method=request.getParameter("method");
@@ -57,25 +62,24 @@ public class UserServlet extends HttpServlet {
         	search_user(request,response);
         }
 	}
+*/
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+	public void get() throws Exception {
 	
-	protected void get_user(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
+
+		HttpServletResponse response = ServletActionContext.getResponse();
 		Service service=new Service();
 		List<User> users=service.getalluser();
 		
 		String jsonobjstr=JSONArray.fromObject(users).toString();
 		response.getWriter().print(jsonobjstr);
+
 	}
 	
 	
-	protected void update_user(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
+	public  void update() throws Exception {
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String phone = request.getParameter("phone");
@@ -97,11 +101,14 @@ public class UserServlet extends HttpServlet {
 			request.setAttribute("message", "update error");
 			request.getRequestDispatcher("/message.jsp").forward(request, response);
 		}
+
 	}
 	
 	
 	
-	protected void delete_user(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
+	public void delete() throws Exception {
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
 		String user_id=request.getParameter("id");
 		
 		//System.out.println(user_id);
@@ -111,9 +118,12 @@ public class UserServlet extends HttpServlet {
 		JSONObject jsonobj=new JSONObject();
 		jsonobj.put("success", true);
 		response.getWriter().print(jsonobj.toString());
+
 	}
 	
-	protected void create_user(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
+	public  void create() throws Exception {
+		HttpServletResponse response = ServletActionContext.getResponse();
+		HttpServletRequest request = ServletActionContext.getRequest();
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String phone = request.getParameter("phone");
@@ -137,12 +147,12 @@ public class UserServlet extends HttpServlet {
 			request.setAttribute("message", "×¢²áÊ§°Ü");
 			request.getRequestDispatcher("/message.jsp").forward(request, response);
 		}
-		
-		
+
 	}
 	
-	protected void search_user(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
-		
+	public  void search() throws Exception {
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
 		String username=request.getParameter("username");
 		Service service=new Service();
 		User user=service.searchuser(username);
@@ -155,6 +165,7 @@ public class UserServlet extends HttpServlet {
 		rs.put("total", 1);
 		rs.put("rows",jsonArray);
 		response.getWriter().print(rs.toString());
-	}
+	
 
+	}
 }

@@ -53,8 +53,8 @@
   </li>
    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Book<span class="caret"></span></a>
 		<ul class="dropdown-menu" role="menu">
-		 <li><a href="${pageContext.request.contextPath }/admin/book?method=addUI" target="right" onclick="event.stopPropagation()">Add Book</a></li>
-	     <li><a href="${pageContext.request.contextPath }/admin/book?method=list" target="right"onclick="event.stopPropagation()">View Book</a><li>
+		 <li><a href="${pageContext.request.contextPath }/admin/book_addUI" target="right" onclick="event.stopPropagation()">Add Book</a></li>
+	     <li><a href="${pageContext.request.contextPath }/admin/book_list" target="right"onclick="event.stopPropagation()">View Book</a><li>
 			
   	    </ul>
   </li>
