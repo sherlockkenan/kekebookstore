@@ -18,10 +18,19 @@
 			<result name="delete" type="redirect">/admin/book_list</result>				
 		</action>
 		
-		<action name="user_*" method="{1}" class="admin.UserAction">	
-		    <result name="get">/admin/Usermanage.jsp</result>	
+		<action name="order_*" method="{1}" class="admin.OrderAction">
+			<result name="get">/admin/order.jsp</result>	
+			<result name="delete">/message.jsp</result>	
+			<result name="confirm">/message.jsp</result>	
+			<result name="detail" >/admin/orderdetail.jsp</result>				
 		</action>
-    
+		
+		<action name="user_*" method="{1}" class="admin.UserAction"/>	
+		
+        <action name="category_*" method="{1}" class="admin.CategoryAction"/>	
+        
+         <action name="salestatistic_*" method="{1}" class="admin.SalestatisticAction"/>
+		
     
     
     </package>

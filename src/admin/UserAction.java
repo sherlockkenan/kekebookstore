@@ -30,44 +30,17 @@ import service.Service;
 public class UserAction extends ActionSupport {
 
 	private static final long serialVersionUID = 1L;
-	
-	/*protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-		String method=request.getParameter("method");
-		if(method.equals("getall")){
-			try{
-				String username=request.getParameter("username");
-				if(username.equals("")){
-					
-					get_user(request,response);
-				}
-				else{
-					search_user(request, response);
-				}
-			}catch(Exception e){
-			    get_user(request,response);
-			}
-		}
-		if(method.equals("update")){
-			update_user(request,response);
-		}
-        if(method.equals("create")){
-        	create_user(request,response);
-		}
-        if(method.equals("delete")){
-        	delete_user(request,response);
-        }
-        if(method.equals("search")){
-        	search_user(request,response);
-        }
-	}
-*/
+
 
 	public void get() throws Exception {
 	
-
+		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
+		String username=request.getParameter("username");
+		if(username!=null){
+			search();
+			return;
+		}
 		Service service=new Service();
 		List<User> users=service.getalluser();
 		
@@ -162,10 +135,14 @@ public class UserAction extends ActionSupport {
         JSONArray jsonArray=new JSONArray();
 		jsonArray=JSONArray.fromObject(userlist);
 		JSONObject rs=new JSONObject();
-		rs.put("total", 1);
+		if(user==null)
+		{
+			rs.put("total", 0);
+		}
+		else{
+			rs.put("total", 1);
+		}
 		rs.put("rows",jsonArray);
 		response.getWriter().print(rs.toString());
-	
-
 	}
 }

@@ -11,10 +11,10 @@
     <script type="text/javascript">
         $(function(){
             $('#dg').edatagrid({
-            	url: 'category?method=getall',
-				saveUrl: 'category?method=create',
-				updateUrl: 'category?method=update',
-				destroyUrl: 'category?method=delete'
+            	url: 'category_getall',
+				saveUrl: 'category_add',
+				updateUrl: 'category_update',
+				destroyUrl: 'category_delete'
             });
         });
     </script>

@@ -47,7 +47,7 @@
     	</tr>
 	</table>
 	 <c:if test="${!order.state}">
-	  <a href="${pageContext.request.contextPath }/admin/order?method=confirm&order_id=${order.id}">Comfirm Order</a>
+	  <a href="${pageContext.request.contextPath }/admin/order_confirm?order_id=${order.id}">Comfirm Order</a>
 	 </c:if>
 	
   </body>

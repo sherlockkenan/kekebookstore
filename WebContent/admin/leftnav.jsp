@@ -60,8 +60,8 @@
   </li>
   <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Order<span class="caret"onclick="event.stopPropagation()"></span></a>
 		<ul class="dropdown-menu" role="menu">
-		  <li><a href="${pageContext.request.contextPath }/admin/order?method=get&state=false" target="right"onclick="event.stopPropagation()">Unconfirm Order</a></li>
-		  <li><a href="${pageContext.request.contextPath }/admin/order?method=get&state=true" target="right"onclick="event.stopPropagation()">Confirm Order</a></li>
+		  <li><a href="${pageContext.request.contextPath }/admin/order_get?state=false" target="right"onclick="event.stopPropagation()">Unconfirm Order</a></li>
+		  <li><a href="${pageContext.request.contextPath }/admin/order_get?state=true" target="right"onclick="event.stopPropagation()">Confirm Order</a></li>
 			
   	    </ul>
   </li>

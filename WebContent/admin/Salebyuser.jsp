@@ -15,7 +15,7 @@
 <h1>Orders Statics By User</h1>
 
 <table id="dg" title="My Orders" class="easyui-datagrid"
-       url="salestatistic?method=byuser"
+       url="salestatistic_byuser"
        toolbar="#toolbar" pagination="true"
        rownumbers="true" fitColumns="true" singleSelect="true">
 	<thead>

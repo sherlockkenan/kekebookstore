@@ -15,7 +15,7 @@
 <h1>Orders Statics By Catergory</h1>
 
 <table id="dg" title="My Orders" class="easyui-datagrid"
-       url="salestatistic?method=bycategory"
+       url="salestatistic_bycategory"
        toolbar="#toolbar" pagination="true"
        rownumbers="true" fitColumns="true" singleSelect="true">
 	<thead>

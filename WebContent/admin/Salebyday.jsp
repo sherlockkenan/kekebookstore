@@ -15,7 +15,7 @@
 <h1>Orders Statics By Day</h1>
 
 <table id="dg" title="My Orders" class="easyui-datagrid"
-       url="salestatistic?method=byday"
+       url="salestatistic_byday"
        toolbar="#toolbar" pagination="true"
        rownumbers="true" fitColumns="true" singleSelect="true">
 	<thead>

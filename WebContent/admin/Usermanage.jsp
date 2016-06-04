@@ -21,6 +21,7 @@
     <script type="text/javascript">
         function doSearch(){
             $('#dg').datagrid('load',{
+            	url: 'user_search',
             	username: $('#username').val(),
             });
         }

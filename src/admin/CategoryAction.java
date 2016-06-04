@@ -11,49 +11,43 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.struts2.ServletActionContext;
+
+import com.opensymphony.xwork2.ActionSupport;
+
 import service.Service;
 import entity.*;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 //处理分类的CRUD请求
-@WebServlet("/admin/category")
-public class CategoryServlet extends HttpServlet {
+//@WebServlet("/admin/category")
+public class CategoryAction extends ActionSupport {
 
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String method = request.getParameter("method");
-		if (method.equals("create")) {
-			add(request, response);
-		} else if (method.equals("delete")) {
-			delete(request, response);
-		} else if (method.equals("update")) {
-			update(request, response);
-		} else if (method.equals("find")) {
-			find(request, response);
-		} else if (method.equals("getall")) {
-			getall(request, response);
-		} else {
-			request.setAttribute("message", "不支持此类操作");
-			request.getRequestDispatcher("/message.jsp").forward(request,
-					response);
-		}
-	}
+	private static final long serialVersionUID = 1L;
+	
 
-	private void getall(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	public void getall() throws Exception {
+	
+		HttpServletResponse response = ServletActionContext.getResponse();
 		Service service = new Service();
 		List<Category> CategoryList = service.getAllCategory();
 		String jsonobjstr=JSONArray.fromObject(CategoryList).toString();
 		response.getWriter().print(jsonobjstr);
 	}
 
-	private void find(HttpServletRequest request, HttpServletResponse response) {
+	public void find() throws Exception {
+	
+
 		// TODO Auto-generated method stub
 
 	}
 
-	private void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void update() throws Exception {
+	
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		
 		String name = request.getParameter("name");
 		String description = request.getParameter("description");
 		
@@ -75,7 +69,10 @@ public class CategoryServlet extends HttpServlet {
 
 	}
 
-	private void delete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void delete() throws Exception {
+	
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
          String id=request.getParameter("id");
 		
 		//System.out.println(user_id);
@@ -88,7 +85,10 @@ public class CategoryServlet extends HttpServlet {
 
 	}
 
-	private void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void add() throws Exception {
+	
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
 		try {
 			String name = request.getParameter("name");
 			String description = request.getParameter("description");
@@ -110,10 +110,6 @@ public class CategoryServlet extends HttpServlet {
 		request.getRequestDispatcher("/message.jsp").forward(request, response);
 	}
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		doGet(request, response);
-	}
+	
 
 }

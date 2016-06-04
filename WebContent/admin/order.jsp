@@ -25,8 +25,8 @@
 	    		<td>${order.price }</td>
 	    		<td>${order.state==true?'Confirm':'Unconfirm' }</td>
 	    		<td>
-	    			<a href="${pageContext.request.contextPath }/admin/order?method=detail&order_id=${order.id}">View more</a>
-	    			<a href="${pageContext.request.contextPath }/admin/order?method=delete&order_id=${order.id}">Delete</a>
+	    			<a href="${pageContext.request.contextPath }/admin/order_detail?order_id=${order.id}">Detail</a>
+	    			<a href="${pageContext.request.contextPath }/admin/order_delete?order_id=${order.id}">Delete</a>
 	    		</td>
     		</tr>
     	</c:forEach>

@@ -6,7 +6,7 @@
     <title>Manage Platform</title>
   </head>
   
-  <frameset rows="50px,*" frameborder=no>
+  <frameset rows="50px,*" frameborder=no >
   	<frame src="${pageContext.request.contextPath }/admin/head.jsp" name="head">
   	<frameset cols="15%,*" frameborder=no>
   		<frame src="${pageContext.request.contextPath }/admin/leftnav.jsp" name="left">
