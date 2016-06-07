@@ -9,7 +9,7 @@ import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import entity.User;
-import service.Service;
+import service.User_service;
 
 public class RegisterAction extends ActionSupport {
 
@@ -36,7 +36,7 @@ public class RegisterAction extends ActionSupport {
 			}
 			User user = new User(id, username, cpassword, phone, email, address,"user");
 						
-			Service service = new Service();
+			User_service service = new User_service();
 			service.Register(user);
 			request.setAttribute("message", "Register Succeed");
 			return SUCCESS;

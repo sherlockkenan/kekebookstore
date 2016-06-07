@@ -16,10 +16,21 @@ import sun.reflect.generics.tree.VoidDescriptor;
 
 public class Service{  
 	
+	private Userdao userdao;
+	
+	public Userdao getUserdao() {
+		return userdao;
+	}
+
+
+	public void setUserdao(Userdao userdao) {
+		this.userdao = userdao;
+	}
+
+
 	//------------------------------------------------------user-----------------------------
      public User CheckUser(String username, String password) 
         throws Exception {
-         Userdao userdao=new Userdao();
          User user = userdao.find(username, password);
     
     	 return user;

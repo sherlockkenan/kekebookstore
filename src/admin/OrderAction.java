@@ -12,7 +12,8 @@ import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import entity.*;
-import service.Service;
+import service.Order_service;
+
 
 
 
@@ -28,7 +29,7 @@ public class OrderAction extends ActionSupport {
 		String order_id=request.getParameter("order_id");
 		
 		//System.out.println(user_id);
-		Service service=new Service();
+		Order_service service=new Order_service();
 		service.deleteorder(order_id);
 		
 		request.setAttribute("message", "订单已删除");
@@ -39,7 +40,7 @@ public class OrderAction extends ActionSupport {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
 		 String state = request.getParameter("state");
-		 Service service = new Service();
+		 Order_service service = new Order_service();
 		 List<Order> orders = service.Listorderbystate(state);//这里需要获得该用户所有订单消息，不用只看未发货的(state==false)，在后台会区分未发货和已发货，在前台要罗列在一起
 		 request.setAttribute("orders", orders);
 
@@ -53,7 +54,7 @@ public class OrderAction extends ActionSupport {
 		try{
 			
 			String order_id = request.getParameter("order_id");
-			Service service = new Service();
+			Order_service service = new Order_service();
 			service.confirmOrder(order_id);
 			request.setAttribute("message", "订单已确认，请及时发货");
 			request.getRequestDispatcher("/message.jsp").forward(request, response);
@@ -70,7 +71,7 @@ public class OrderAction extends ActionSupport {
 		HttpServletResponse response = ServletActionContext.getResponse();
 		
 		String order_id = request.getParameter("order_id");
-		Service service = new Service();
+		Order_service service = new Order_service();
 		Order order = service.getOrder(order_id);
 		request.setAttribute("order", order);
 		request.getRequestDispatcher("/admin/orderdetail.jsp").forward(request, response);

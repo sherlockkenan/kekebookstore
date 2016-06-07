@@ -12,7 +12,7 @@ import entity.Book;
 import entity.Cart;
 import entity.Category;
 import entity.Page;
-import service.Service;
+import service.Book_service;
 
 public class CartAction extends ActionSupport {
 
@@ -26,7 +26,7 @@ public class CartAction extends ActionSupport {
 			 
 
 			    String bookid = request.getParameter("bookid");
-			    Service service = new Service();
+			    Book_service service = new Book_service();
 			    Book book = service.findBook(bookid);
 			    Cart cart = (Cart) request.getSession().getAttribute("cart");
 			    if(cart == null){
@@ -47,7 +47,7 @@ public class CartAction extends ActionSupport {
 		HttpServletRequest request=ServletActionContext.getRequest();
 	    try{
 		    String bookid = request.getParameter("bookid");
-		    Service service = new Service();
+		    Book_service service = new Book_service();
 		    Book book=service.findBook(bookid);
 		    Cart cart=(Cart)request.getSession().getAttribute("cart");		    
 		    service.deletebookbyone(cart, book);

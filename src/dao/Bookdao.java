@@ -14,6 +14,8 @@ import util.GetSessionFactory;
 
 
 public class Bookdao {
+	
+	
 	public void add(Book book){
 		try {
 			Session session=GetSessionFactory.getSession();

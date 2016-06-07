@@ -13,7 +13,8 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import entity.Category;
 import entity.Page;
-import service.Service;
+import service.Book_service;
+import service.Category_service;
 
 public class IndexAction extends ActionSupport {
 
@@ -23,12 +24,13 @@ public class IndexAction extends ActionSupport {
 	public String Category() throws Exception {
 		HttpServletRequest request=ServletActionContext.getRequest();
 	
-		Service service = new Service();
+		Category_service service = new Category_service();
 		String category_id = request.getParameter("category_id");
 		List<Category> categories = service.getAllCategory();
 		request.setAttribute("categories", categories);
 		String pagenum = request.getParameter("pagenum");
-		Page page = service.getBookPageData(pagenum, category_id);
+		Book_service book_service = new Book_service();
+		Page page = book_service.getBookPageData(pagenum, category_id);
 		request.setAttribute("page", page);
 		return SUCCESS;
 

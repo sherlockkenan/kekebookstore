@@ -11,7 +11,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import entity.Cart;
 import entity.Order;
 import entity.User;
-import service.Service;
+import service.Order_service;
 
 public class OrderAction  extends ActionSupport {
 
@@ -24,7 +24,7 @@ public class OrderAction  extends ActionSupport {
 		try{
 			User user = (User)request.getSession().getAttribute("user");
 			String user_id=user.getId();
-			Service service = new Service();
+			Order_service service = new Order_service();
 			List<Order> orders = service.Listorder(user_id);
 			request.setAttribute("orders", orders);
 		    return "list";
@@ -37,7 +37,7 @@ public class OrderAction  extends ActionSupport {
 		HttpServletRequest request=ServletActionContext.getRequest();
 	
 		String order_id=request.getParameter("order_id");
-		Service service=new Service();
+		Order_service service=new Order_service();
 		Order order=service.getOrder(order_id);
 		request.setAttribute("order", order);
 		return "detail";
@@ -56,7 +56,7 @@ public class OrderAction  extends ActionSupport {
 			   }
 			   Order order=new Order();
 			   order.setUser(user);
-			   Service service=new Service();
+			   Order_service service=new Order_service();
 			   service.createOrder(cart,order);
 			   request.getSession().removeAttribute("cart");
 			   return "create";

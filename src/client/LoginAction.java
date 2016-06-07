@@ -15,6 +15,17 @@ public class LoginAction extends ActionSupport {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private Service service;
+
+
+
+	public Service getService() {
+		return service;
+	}
+
+	public void setService(Service service) {
+		this.service = service;
+	}
 
 	@Override
 	public String execute() throws Exception {
@@ -24,7 +35,7 @@ public class LoginAction extends ActionSupport {
 		String password=request.getParameter("password");
 	
 		
-		Service service= new Service();
+		
 		try{
 			User user=service.CheckUser(username, password);
 			if(user==null){

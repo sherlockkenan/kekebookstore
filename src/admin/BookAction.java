@@ -54,7 +54,7 @@ public class BookAction extends ActionSupport implements ModelDriven<Book> {
 	public String list() throws Exception {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		String pagenum = request.getParameter("pagenum");
-		Service service = new Service();
+		Book_service service = new Book_service();
 		Page page = service.getBookPageData(pagenum);
 		request.setAttribute("page", page);
 		// request.getRequestDispatcher("/admin/book.jsp").forward(request,
@@ -66,7 +66,7 @@ public class BookAction extends ActionSupport implements ModelDriven<Book> {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		try {
 			doupLoad(request);
-			Service service = new Service();
+			Book_service service = new Book_service();
 			book.setId(UUID.randomUUID().toString());
 			service.addBook(book);
 			request.setAttribute("message", "Ìí¼Ó³É¹¦");
@@ -120,7 +120,7 @@ public class BookAction extends ActionSupport implements ModelDriven<Book> {
 
 	public String addUI() throws Exception {
 		HttpServletRequest request = ServletActionContext.getRequest();
-		Service service = new Service();
+		Category_service service = new Category_service();
 		List<Category> category = service.getAllCategory();
 		request.setAttribute("categories", category);
 		return "addUI";
@@ -130,7 +130,7 @@ public class BookAction extends ActionSupport implements ModelDriven<Book> {
 	public String delete() throws Exception {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		String book_id = request.getParameter("book_id");
-		Service service = new Service();
+		Book_service service = new Book_service();
 		service.deletebook(book_id);
 		return "delete";
 		// list(request, response);

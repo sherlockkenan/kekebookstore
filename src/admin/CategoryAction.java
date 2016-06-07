@@ -15,7 +15,7 @@ import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import service.Service;
+import service.Category_service;
 import entity.*;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -30,7 +30,7 @@ public class CategoryAction extends ActionSupport {
 	public void getall() throws Exception {
 	
 		HttpServletResponse response = ServletActionContext.getResponse();
-		Service service = new Service();
+		Category_service service = new Category_service();
 		List<Category> CategoryList = service.getAllCategory();
 		String jsonobjstr=JSONArray.fromObject(CategoryList).toString();
 		response.getWriter().print(jsonobjstr);
@@ -54,7 +54,7 @@ public class CategoryAction extends ActionSupport {
 		String id = request.getParameter("id");
         Category category = new Category(id, name, description);
 		
-		Service service = new Service();
+        Category_service service = new Category_service();
 		try {
 			service.updatecategory(category);
 			JSONObject jsonobj=new JSONObject();
@@ -76,7 +76,7 @@ public class CategoryAction extends ActionSupport {
          String id=request.getParameter("id");
 		
 		//System.out.println(user_id);
-		Service service=new Service();
+         Category_service service=new Category_service();
 		service.deletecategory(id);
 		
 		JSONObject jsonobj=new JSONObject();
@@ -98,7 +98,7 @@ public class CategoryAction extends ActionSupport {
 			category.setDescription(description);
 			category.setId(UUID.randomUUID().toString());
 
-			Service service = new Service();
+			Category_service service = new Category_service();
 			service.addCategory(category);
 			JSONObject jsonobj=new JSONObject();
 			jsonobj.put("success", true);

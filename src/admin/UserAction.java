@@ -20,7 +20,7 @@ import entity.Book;
 import entity.User;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import service.Service;
+import service.User_service;
 
 
 /**
@@ -41,7 +41,7 @@ public class UserAction extends ActionSupport {
 			search();
 			return;
 		}
-		Service service=new Service();
+		User_service service=new User_service();
 		List<User> users=service.getalluser();
 		
 		String jsonobjstr=JSONArray.fromObject(users).toString();
@@ -62,7 +62,7 @@ public class UserAction extends ActionSupport {
 		String id = request.getParameter("id");
         User user = new User(id, username, password, phone, email, address,role);
 		
-		Service service = new Service();
+        User_service service = new User_service();
 		try {
 			service.updateuser(user);
 			JSONObject jsonobj=new JSONObject();
@@ -85,7 +85,7 @@ public class UserAction extends ActionSupport {
 		String user_id=request.getParameter("id");
 		
 		//System.out.println(user_id);
-		Service service=new Service();
+		User_service service=new User_service();
 		service.deleteuser(user_id);
 		
 		JSONObject jsonobj=new JSONObject();
@@ -108,7 +108,7 @@ public class UserAction extends ActionSupport {
 		
 		User user = new User(id, username, password, phone, email, address,role);
 		
-		Service service = new Service();
+		User_service service = new User_service();
 		try {
 			service.Register(user);
 			JSONObject jsonobj=new JSONObject();
@@ -127,7 +127,7 @@ public class UserAction extends ActionSupport {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
 		String username=request.getParameter("username");
-		Service service=new Service();
+		User_service service=new User_service();
 		User user=service.searchuser(username);
 	    List<User>userlist=new ArrayList<User>();
 		userlist.add(user);

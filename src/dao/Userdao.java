@@ -7,18 +7,40 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.engine.spi.SessionEventListenerManager;
+
 
 import util.GetSessionFactory;
 import entity.User;
 import sun.security.timestamp.TSRequest;
 
 public class Userdao{
+	
+	private SessionFactory sessionFactory;  
+	
+	public SessionFactory getSessionFactory()
+	{
+		return sessionFactory;
+	}
+	
+	public void setSessionFactory(SessionFactory sessionFactory)
+	{
+		this.sessionFactory = sessionFactory;
+	}
+	private String str;
+
+	public String getStr() {
+		return str;
+	}
+
+	public void setStr(String str) {
+		this.str = str;
+	}
 
 	public void add(User user){
 		try{
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			session.save(user);
 			ts.commit();
@@ -31,10 +53,9 @@ public class Userdao{
 
 	public User find(String id){
 		try{
-			//QueryRunner runner = new QueryRunner(jdbcutils.getDataSource());
-			
+			//QueryRunner runner = new QueryRunner(jdbcutils.getDataSource());			
 			//return (User)runner.query(sql,new BeanHandler(User.class),id);
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			String sql = "from User where id=?";
 			Query query=session.createQuery(sql);
@@ -55,7 +76,7 @@ public class Userdao{
 			//String sql = "select * from user where username=?";
 			//return (User)runner.query(sql,new BeanHandler(User.class),username);
 			
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			String sql = "from User as user where user.username=?";
 			Query query=session.createQuery(sql);
@@ -72,7 +93,7 @@ public class Userdao{
 	public User find(String username, String password){
 		try{
 
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			String sql = "from User where username=? and password=?";
 			Query query=session.createQuery(sql);
@@ -91,7 +112,7 @@ public class Userdao{
 	public void delete(String id){
 		try{
 			//find the student
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			String sql = "from User where id=?";
 			Query query=session.createQuery(sql);
@@ -107,7 +128,7 @@ public class Userdao{
 	}
 	public void update(User user){
 		try{
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			session.update(user);
 			ts.commit();
@@ -122,7 +143,7 @@ public class Userdao{
     public List<User> getall() {
 	   try{
 			
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			String sql = "from User ";
 			Query query=session.createQuery(sql);
