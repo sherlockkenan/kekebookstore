@@ -18,14 +18,23 @@ public class OrderAction  extends ActionSupport {
 
 	private static final long serialVersionUID = 1L;
 
+	private Order_service  order_service;
+	public Order_service getOrder_service() {
+		return order_service;
+	}
+
+	public void setOrder_service(Order_service order_service) {
+		this.order_service = order_service;
+	}
+
 	public String list() throws Exception {
 		HttpServletRequest request=ServletActionContext.getRequest();
 	
 		try{
 			User user = (User)request.getSession().getAttribute("user");
 			String user_id=user.getId();
-			Order_service service = new Order_service();
-			List<Order> orders = service.Listorder(user_id);
+			
+			List<Order> orders = order_service.Listorder(user_id);
 			request.setAttribute("orders", orders);
 		    return "list";
 			}catch(Exception e){
@@ -37,8 +46,8 @@ public class OrderAction  extends ActionSupport {
 		HttpServletRequest request=ServletActionContext.getRequest();
 	
 		String order_id=request.getParameter("order_id");
-		Order_service service=new Order_service();
-		Order order=service.getOrder(order_id);
+
+		Order order=order_service.getOrder(order_id);
 		request.setAttribute("order", order);
 		return "detail";
 	}
@@ -56,8 +65,8 @@ public class OrderAction  extends ActionSupport {
 			   }
 			   Order order=new Order();
 			   order.setUser(user);
-			   Order_service service=new Order_service();
-			   service.createOrder(cart,order);
+			
+			   order_service.createOrder(cart,order);
 			   request.getSession().removeAttribute("cart");
 			   return "create";
 			}

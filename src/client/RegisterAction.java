@@ -14,11 +14,20 @@ import service.User_service;
 public class RegisterAction extends ActionSupport {
 
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
+	private User_service user_service;
+
+
+	public User_service getUser_service() {
+		return user_service;
+	}
+
+	public void setUser_service(User_service user_service) {
+		this.user_service = user_service;
+	}
+	
+	
 	@Override
 	public String execute() throws Exception {
 		HttpServletRequest request=ServletActionContext.getRequest();		
@@ -36,8 +45,8 @@ public class RegisterAction extends ActionSupport {
 			}
 			User user = new User(id, username, cpassword, phone, email, address,"user");
 						
-			User_service service = new User_service();
-			service.Register(user);
+		
+			user_service.Register(user);
 			request.setAttribute("message", "Register Succeed");
 			return SUCCESS;
 			

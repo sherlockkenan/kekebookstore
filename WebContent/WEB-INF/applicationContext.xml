@@ -43,18 +43,86 @@
 </bean>
 
  
-<!-- 把DAO注入给Session工厂 -->
+<!-- 把Session工厂 注入给dao-->
 <bean id="userdao" class="dao.Userdao">
    <property name="sessionFactory">
     	<ref bean="sessionFactory" />
    </property>
 </bean>
 
-<bean id="userService" class="service.Service">
+<bean id="bookdao" class="dao.Bookdao">
+	<property name="sessionFactory">
+		<ref bean="sessionFactory" />
+	</property>
+</bean>
+<bean id="orderdao" class="dao.Orderdao">
+	<property name="sessionFactory">
+		<ref bean="sessionFactory" />
+	</property>
+</bean>
+<bean id="categorydao" class="dao.Categorydao">
+	<property name="sessionFactory">
+		<ref bean="sessionFactory" />
+	</property>
+</bean>
+
+<!-- 把dao注入给Service -->
+<bean id="user_service" class="service.User_service">
    <property name="userdao" ref="userdao" />
 </bean>
-<bean id="client.LoginAction" class="client.LoginAction" scope="prototype">
-   <property name="service" ref="userService" />
 
+<bean id="order_service" class="service.Order_service">
+   <property name="orderdao" ref="orderdao" />
 </bean>
+
+<bean id="book_service" class="service.Book_service">
+   <property name="bookdao" ref="bookdao" />
+</bean>
+
+<bean id="category_service" class="service.Category_service">
+   <property name="categorydao" ref="categorydao" />
+</bean>
+
+
+<!-- 把Action注入给Service -->
+<bean id="client.LoginAction" class="client.LoginAction" scope="prototype">
+   <property name="user_service" ref="user_service" />
+</bean>
+
+<bean id="client.RegisterAction" class="client.RegisterAction" scope="prototype">
+   <property name="user_service" ref="user_service" />
+</bean>
+
+<bean id="client.OrderAction" class="client.OrderAction" scope="prototype">
+   <property name="order_service" ref="order_service" />
+</bean>
+
+<bean id="client.IndexAction" class="client.IndexAction" scope="prototype">
+   <property name="book_service" ref="book_service" />
+   <property name="category_service" ref="category_service" />
+</bean>
+
+<bean id="client.CartAction" class="client.CartAction" scope="prototype">
+   <property name="book_service" ref="book_service" />
+</bean>
+
+
+
+<bean id="admin.BookAction" class="admin.BookAction" scope="prototype">
+   <property name="book_service" ref="book_service" />
+   <property name="category_service" ref="category_service" />
+</bean>
+
+<bean id="admin.CategoryAction" class="admin.CategoryAction" scope="prototype">
+   <property name="category_service" ref="category_service" />
+</bean>
+
+<bean id="admin.OrderAction" class="admin.OrderAction" scope="prototype">
+   <property name="order_service" ref="order_service" />
+</bean>
+
+<bean id="admin.UserAction" class="admin.UserAction" scope="prototype">
+   <property name="user_service" ref="user_service" />
+</bean>
+
 </beans>

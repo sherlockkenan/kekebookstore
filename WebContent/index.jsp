@@ -1,15 +1,10 @@
-<%@ page language="java" import="java.util.*,entity.*,service.Service" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*,entity.*,service.Category_service,service.Book_service" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
-   if(request.getAttribute("categories")==null){
-      Service service = new Service();
-      List<Category> categories = service.getAllCategory();
-      request.setAttribute("categories", categories);
-      String pagenum = request.getParameter("pagenum");
-      Page pages = service.getBookPageData(pagenum);
-      request.setAttribute("page", pages);
-   }
+if(request.getAttribute("categories")==null){
+	   response.sendRedirect("index");
+}
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>

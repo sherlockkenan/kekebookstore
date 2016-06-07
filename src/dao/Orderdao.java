@@ -4,17 +4,30 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import entity.*;
-import util.GetSessionFactory;
 
 
 
 public class Orderdao {
+	
+    private SessionFactory sessionFactory;  
+	
+	public SessionFactory getSessionFactory()
+	{
+		return sessionFactory;
+	}
+	
+	public void setSessionFactory(SessionFactory sessionFactory)
+	{
+		this.sessionFactory = sessionFactory;
+	}
+	
 	public void add(Order order){
 		try{
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			session.save(order);
 			ts.commit();
@@ -28,7 +41,7 @@ public class Orderdao {
 
 	public Order find(String id){
 		try{
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			String sql = "from Order where id=?";
 			Query query=session.createQuery(sql);
@@ -50,7 +63,7 @@ public class Orderdao {
 	public List<Order> getAll(boolean state){
 		try{
 			
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			String sql = "from Order where state=?";
 			Query query=session.createQuery(sql);
@@ -69,7 +82,7 @@ public class Orderdao {
 	//前端页面中获取某个用户的所有订单
 	public List<Order> getAll(boolean state, String userid){
 		try{
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			String sql = "from Order where state=? and User.id=?";
 			Query query=session.createQuery(sql);
@@ -88,7 +101,7 @@ public class Orderdao {
 	
 	public List<Order> getAllOrder(String userid){
 		try{
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			String sql = "from Order where user_id=?";
 			Query query=session.createQuery(sql);
@@ -109,7 +122,7 @@ public class Orderdao {
 
 	public void update(Order order){//这里只改变发货状态，实际中还可以改变购买数量等其他信息，可以再完善
 		try{
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			session.update(order);
 			ts.commit();
@@ -123,7 +136,7 @@ public class Orderdao {
 	public void delete(String id){
 		try{
 			//find the order
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			String sql = "from Order where id=?";
 			Query query=session.createQuery(sql);

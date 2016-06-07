@@ -27,35 +27,18 @@ public class BookAction extends ActionSupport implements ModelDriven<Book> {
 	private static final long serialVersionUID = 1L;
 
 	private Book book = new Book();
-
+	private Category_service category_service;
 	private File upload;
 	private String uploadFileName;//设置上传文件的文件名
     private String uploadContentType;//上传文件的类型
-    public String getUploadFileName() {
-        return uploadFileName;
-    }
-    public void setUploadFileName(String uploadFileName) {
-        this.uploadFileName = uploadFileName;
-    }
-    public String getUploadContentType() {
-        return uploadContentType;
-    }
-    public void setUploadContentType(String uploadContentType) {
-        this.uploadContentType = uploadContentType;
-    }
-	public File getUpload() {
-		return upload;
-	}
-
-	public void setUpload(File upload) {
-		this.upload = upload;
-	}
+    private Book_service book_service;
+   
 
 	public String list() throws Exception {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		String pagenum = request.getParameter("pagenum");
-		Book_service service = new Book_service();
-		Page page = service.getBookPageData(pagenum);
+		
+		Page page = book_service.getBookPageData(pagenum);
 		request.setAttribute("page", page);
 		// request.getRequestDispatcher("/admin/book.jsp").forward(request,
 		// response);
@@ -66,9 +49,8 @@ public class BookAction extends ActionSupport implements ModelDriven<Book> {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		try {
 			doupLoad(request);
-			Book_service service = new Book_service();
 			book.setId(UUID.randomUUID().toString());
-			service.addBook(book);
+			book_service.addBook(book);
 			request.setAttribute("message", "添加成功");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -120,8 +102,8 @@ public class BookAction extends ActionSupport implements ModelDriven<Book> {
 
 	public String addUI() throws Exception {
 		HttpServletRequest request = ServletActionContext.getRequest();
-		Category_service service = new Category_service();
-		List<Category> category = service.getAllCategory();
+
+		List<Category> category = category_service.getAllCategory();
 		request.setAttribute("categories", category);
 		return "addUI";
 		// request.getRequestDispatcher("/admin/addBook.jsp").forward(request,response);
@@ -130,8 +112,7 @@ public class BookAction extends ActionSupport implements ModelDriven<Book> {
 	public String delete() throws Exception {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		String book_id = request.getParameter("book_id");
-		Book_service service = new Book_service();
-		service.deletebook(book_id);
+		book_service.deletebook(book_id);
 		return "delete";
 		// list(request, response);
 	}
@@ -141,5 +122,39 @@ public class BookAction extends ActionSupport implements ModelDriven<Book> {
 		// TODO Auto-generated method stub
 		return book;
 	}
+	 
+    public Book_service getBook_service() {
+		return book_service;
+	}
+	public void setBook_service(Book_service book_service) {
+		this.book_service = book_service;
+	}
+	public String getUploadFileName() {
+        return uploadFileName;
+    }
+    public void setUploadFileName(String uploadFileName) {
+        this.uploadFileName = uploadFileName;
+    }
+    public String getUploadContentType() {
+        return uploadContentType;
+    }
+    public void setUploadContentType(String uploadContentType) {
+        this.uploadContentType = uploadContentType;
+    }
+	public File getUpload() {
+		return upload;
+	}
 
+	public void setUpload(File upload) {
+		this.upload = upload;
+	}
+
+	public Category_service getCategory_service() {
+		return category_service;
+	}
+
+	public void setCategory_service(Category_service category_service) {
+		this.category_service = category_service;
+	}
+	
 }

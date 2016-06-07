@@ -7,7 +7,7 @@ import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import entity.User;
-import service.Service;
+import service.User_service;
 
 public class LoginAction extends ActionSupport {
 
@@ -15,16 +15,17 @@ public class LoginAction extends ActionSupport {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Service service;
+	private User_service user_service;
 
 
 
-	public Service getService() {
-		return service;
+
+	public User_service getUser_service() {
+		return user_service;
 	}
 
-	public void setService(Service service) {
-		this.service = service;
+	public void setUser_service(User_service user_service) {
+		this.user_service = user_service;
 	}
 
 	@Override
@@ -37,7 +38,7 @@ public class LoginAction extends ActionSupport {
 		
 		
 		try{
-			User user=service.CheckUser(username, password);
+			User user=user_service.CheckUser(username, password);
 			if(user==null){
 				throw new Exception("username or password error");
 			}

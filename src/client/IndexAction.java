@@ -20,16 +20,46 @@ public class IndexAction extends ActionSupport {
 
 
 	private static final long serialVersionUID = 1L;
+	private Book_service book_service;
+    private Category_service category_service;
+	public Category_service getCategory_service() {
+		return category_service;
+	}
+
+
+	public void setCategory_service(Category_service category_service) {
+		this.category_service = category_service;
+	}
+
+
+	public Book_service getBook_service() {
+		return book_service;
+	}
+
+
+	public void setBook_service(Book_service book_service) {
+		this.book_service = book_service;
+	}
+	
+	
+	@Override
+	public String execute() throws Exception {
+		HttpServletRequest request=ServletActionContext.getRequest();
+		  List<Category> categories = category_service.getAllCategory();
+	      request.setAttribute("categories", categories);
+	      String pagenum = request.getParameter("pagenum");
+	      Page pages = book_service.getBookPageData(pagenum);
+	      request.setAttribute("page", pages);
+		return SUCCESS;
+	}
+	
 
 	public String Category() throws Exception {
 		HttpServletRequest request=ServletActionContext.getRequest();
-	
-		Category_service service = new Category_service();
 		String category_id = request.getParameter("category_id");
-		List<Category> categories = service.getAllCategory();
+		List<Category> categories = category_service.getAllCategory();
 		request.setAttribute("categories", categories);
 		String pagenum = request.getParameter("pagenum");
-		Book_service book_service = new Book_service();
 		Page page = book_service.getBookPageData(pagenum, category_id);
 		request.setAttribute("page", page);
 		return SUCCESS;

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import util.GetSessionFactory;
@@ -13,12 +14,23 @@ import util.GetSessionFactory;
 import entity.Category;
 
 
-public class CategoryDao {
+public class Categorydao {
 	
+    private SessionFactory sessionFactory;  
+	
+	public SessionFactory getSessionFactory()
+	{
+		return sessionFactory;
+	}
+	
+	public void setSessionFactory(SessionFactory sessionFactory)
+	{
+		this.sessionFactory = sessionFactory;
+	}
 	
 	public void add(Category category){
 		try{
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			session.save(category);
 			ts.commit();
@@ -34,7 +46,7 @@ public class CategoryDao {
 	public Category find(String id){
 		try {
 		
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			String sql = "from Category where id=?";
 			Query query=session.createQuery(sql);
@@ -53,7 +65,7 @@ public class CategoryDao {
 
 	public List<Category> getAll(){
 		try {
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			String sql = "from Category";
 			Query query=session.createQuery(sql);
@@ -70,7 +82,7 @@ public class CategoryDao {
 	
 	public void delete(String id){
 		try{
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			String sql = "from Category where id=?";
 			Query query=session.createQuery(sql);
@@ -88,7 +100,7 @@ public class CategoryDao {
 	
 	public void update(Category category){
 		try{
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			session.update(category);
 			ts.commit();

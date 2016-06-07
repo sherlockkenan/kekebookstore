@@ -11,6 +11,10 @@
         <global-results>
            <result name="error">/message.jsp</result>
         </global-results>  
+        
+        <action name="index" class="client.IndexAction">
+			<result >/index.jsp</result>			
+		</action>
        
 		<action name="login" class="client.LoginAction">
 			<result name="client" type="redirect">/client/index.jsp</result>
@@ -37,6 +41,7 @@
          <action name="index" class="client.IndexAction">
 			<result >/client/index.jsp</result>			
 		</action>
+		
 		
         <action name="index_*" method="{1}" class="client.IndexAction">
 			<result>/client/index.jsp</result>			

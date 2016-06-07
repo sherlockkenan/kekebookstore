@@ -6,19 +6,29 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import entity.Book;
 
-import util.GetSessionFactory;
 
 
 public class Bookdao {
+private SessionFactory sessionFactory;  
 	
+	public SessionFactory getSessionFactory()
+	{
+		return sessionFactory;
+	}
+	
+	public void setSessionFactory(SessionFactory sessionFactory)
+	{
+		this.sessionFactory = sessionFactory;
+	}
 	
 	public void add(Book book){
 		try {
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			session.save(book);
 			ts.commit();
@@ -30,7 +40,7 @@ public class Bookdao {
 	}
 	public void delete(String book_id){
 		try {
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			String sql = "from Book where id=?";
 			Query query=session.createQuery(sql);
@@ -51,7 +61,7 @@ public class Bookdao {
 	 */
 	public Book find(String id){
 		try {
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			String sql = "from Book where id=?";
 			Query query=session.createQuery(sql);
@@ -68,7 +78,7 @@ public class Bookdao {
 	
 	public List<Book> getPageData(int startindex, int pagesize){
 		try {
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			String sql = "from Book";
 			Query query=session.createQuery(sql);
@@ -86,7 +96,7 @@ public class Bookdao {
 	
 	public int getTotalRecord(){
 		try {
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			String sql = "from Book";
 			Query query=session.createQuery(sql);
@@ -106,7 +116,7 @@ public class Bookdao {
 	public List<Book> getPageData(int startindex, int pagesize, String category_id){
 		try {
 			
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			String sql = "from Book where category_id=?";
 			Query query=session.createQuery(sql);
@@ -125,7 +135,7 @@ public class Bookdao {
 	
 	public int getTotalRecord(String category_id){
 		try {
-			Session session=GetSessionFactory.getSession();
+			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
 			String sql = "from Book where category_id=?";
 			Query query=session.createQuery(sql);

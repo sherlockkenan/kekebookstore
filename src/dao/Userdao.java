@@ -28,15 +28,7 @@ public class Userdao{
 	{
 		this.sessionFactory = sessionFactory;
 	}
-	private String str;
 
-	public String getStr() {
-		return str;
-	}
-
-	public void setStr(String str) {
-		this.str = str;
-	}
 
 	public void add(User user){
 		try{

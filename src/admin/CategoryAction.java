@@ -25,13 +25,21 @@ import net.sf.json.JSONObject;
 public class CategoryAction extends ActionSupport {
 
 	private static final long serialVersionUID = 1L;
-	
+	private Category_service category_service;
+
+	public Category_service getCategory_service() {
+		return category_service;
+	}
+
+	public void setCategory_service(Category_service category_service) {
+		this.category_service = category_service;
+	}
 
 	public void getall() throws Exception {
 	
 		HttpServletResponse response = ServletActionContext.getResponse();
-		Category_service service = new Category_service();
-		List<Category> CategoryList = service.getAllCategory();
+	
+		List<Category> CategoryList = category_service.getAllCategory();
 		String jsonobjstr=JSONArray.fromObject(CategoryList).toString();
 		response.getWriter().print(jsonobjstr);
 	}
@@ -54,9 +62,9 @@ public class CategoryAction extends ActionSupport {
 		String id = request.getParameter("id");
         Category category = new Category(id, name, description);
 		
-        Category_service service = new Category_service();
+
 		try {
-			service.updatecategory(category);
+			category_service.updatecategory(category);
 			JSONObject jsonobj=new JSONObject();
 			jsonobj=JSONObject.fromObject(category);
 			response.getWriter().print(jsonobj.toString());
@@ -76,8 +84,8 @@ public class CategoryAction extends ActionSupport {
          String id=request.getParameter("id");
 		
 		//System.out.println(user_id);
-         Category_service service=new Category_service();
-		service.deletecategory(id);
+
+         category_service.deletecategory(id);
 		
 		JSONObject jsonobj=new JSONObject();
 		jsonobj.put("success", true);
@@ -98,8 +106,8 @@ public class CategoryAction extends ActionSupport {
 			category.setDescription(description);
 			category.setId(UUID.randomUUID().toString());
 
-			Category_service service = new Category_service();
-			service.addCategory(category);
+		
+			category_service.addCategory(category);
 			JSONObject jsonobj=new JSONObject();
 			jsonobj.put("success", true);
 			response.getWriter().print(jsonobj.toString());
