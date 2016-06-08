@@ -36,10 +36,57 @@
   }
 
   </style>
+  
+  
+  
   </head>
   
   <body style="text-align:center;">
-  
+    <script type="text/javascript">
+		var xmlHttpRequest = null;
+		function ajaxRequest(id) {
+			if (window.ActiveXObject) {
+				xmlHttpRequest = new ActionXObject("Microsoft.XMLHTTP");
+			} else if (window.XMLHttpRequest) {
+				xmlHttpRequest = new XMLHttpRequest();
+			}
+
+			if (xmlHttpRequest != null) {
+
+				var infoMsg = new Object();
+				infoMsg.id = id;
+				var jsonstr = JSON.stringify(infoMsg);
+
+	            xmlHttpRequest.open("POST","index_detail",true);
+	            xmlHttpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	            xmlHttpRequest.onreadystatechange = ajaxCall; 
+	            xmlHttpRequest.send("content="+jsonstr);
+			
+			}
+		}
+
+		function ajaxCall() {
+			if (xmlHttpRequest.readyState == 4) {
+				if (xmlHttpRequest.status == 200) {
+					var rs="";
+					var json = xmlHttpRequest.responseText;
+					var obj = eval("(" + json +")"); 
+					console.log(obj["id"]);
+					rs="<div  style='height:150; margin-top:20px;'>"
+					 +"<div id='image' style='float:left;'>"
+					+"<img src='${pageContext.request.contextPath }/images/"+obj["image"]+ " 'height=150 width=100></div>"
+					+"<div style='float:left; text-align:left;''>"
+						+"<ul><li>"+obj["name"]
+							+"</li>"
+							+"<li>作者："+obj["author"]+"</li>"
+							+"<li>售价："+obj["price"]+"</li>"
+							+"<li><a href='${pageContext.request.contextPath }/client/cart_add?bookid="+obj["id"]+"'>加入购物车</a></li>"
+							+"<li>详情："+obj["description"]+"</li></ul></div>"
+					document.getElementById("bookandpage").innerHTML = rs;
+				}
+			}
+		}
+	</script>
     
     <div id="header">
             <%@include file="/client/head.jsp" %>
@@ -64,16 +111,20 @@
     	<div id="bookandpage" style="float:left; position:absolute; top: 150px;margin-left:300px;margin-top:20px;">   		
     		<div id="books">
     			<c:forEach var="book" items="${page.list }">
-    				<div id="book" style="height:150; margin-top:20px;">
+    				<div id="book"  style="height:150; margin-top:20px;">
     					<div id="image" style="float:left;">
     						<img src="${pageContext.request.contextPath }/images/${book.image}" height=150 width=100>
     					</div>
     					<div id="bookinfo" style="float:left; text-align:left;">
+    				
     						<ul>
-    							<li>${book.name }</li>
-    							<li>作者：${book.author }</li>
-    							<li>售价：${book.price }</li>
-    							<li>
+    							<li style="margin-bottom:10px">
+    							<a  href="javascript:void(0);" onclick="ajaxRequest('${book.id}')">${book.name }</a>
+    							</li>
+    							
+    							<li style="margin-bottom:10px">售价：${book.price }</li>
+    					
+    							<li style="margin-bottom:10px">
     								<a href="${pageContext.request.contextPath }/client/cart_add?bookid=${book.id}">加入购物车</a>
     							</li>
     						</ul>

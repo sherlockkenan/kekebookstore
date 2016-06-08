@@ -1,9 +1,12 @@
 package client;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,8 +14,10 @@ import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import entity.Book;
 import entity.Category;
 import entity.Page;
+import net.sf.json.JSONObject;
 import service.Book_service;
 import service.Category_service;
 
@@ -64,6 +69,16 @@ public class IndexAction extends ActionSupport {
 		request.setAttribute("page", page);
 		return SUCCESS;
 
+	}
+	public void detail()throws Exception{
+		HttpServletRequest request=ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		JSONObject jsonobj=JSONObject.fromObject(request.getParameter("content"));
+        System.out.println(jsonobj.toString());
+        String bookid=jsonobj.get("id").toString();
+        Book book=book_service.findBook(bookid);
+        JSONObject result=JSONObject.fromObject(book);
+        response.getWriter().print(result);
 	}
 
 }
