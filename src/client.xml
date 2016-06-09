@@ -42,6 +42,10 @@
 			<result >/client/index.jsp</result>			
 		</action>
 		
+		<action name="profile_*" method="{1}" class="client.ProfileAction">
+			<result >/client/userprofile.jsp</result>			
+		</action>
+		
 		
         <action name="index_*" method="{1}" class="client.IndexAction">
 			<result>/client/index.jsp</result>			

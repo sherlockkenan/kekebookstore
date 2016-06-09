@@ -105,6 +105,9 @@
 <bean id="client.CartAction" class="client.CartAction" scope="prototype">
    <property name="book_service" ref="book_service" />
 </bean>
+<bean id="client.ProfileAction" class="client.ProfileAction" scope="prototype">
+    <property name="user_service" ref="user_service" />
+</bean>
 
 
 

@@ -1,4 +1,7 @@
-/client/
 /admin/
-/service/
+/client/
 /dao/
+/entity/
+/filter/
+/service/
+/util/
