@@ -65,4 +65,16 @@ public class Book {
 	public void setCategory_id(String category_id) {
 		this.category_id = category_id;
 	}
+	public Book(String id, String name, String author, double price, String image, String description,
+			String category_id) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.author = author;
+		this.price = price;
+		this.image = image;
+		this.description = description;
+		this.category_id = category_id;
+	}
+	public Book(){}
 }

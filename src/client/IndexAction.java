@@ -70,6 +70,17 @@ public class IndexAction extends ActionSupport {
 		return SUCCESS;
 
 	}
+	
+	public String searchbook() throws Exception {
+		  HttpServletRequest request=ServletActionContext.getRequest();
+		  String book_name=request.getParameter("book");
+		  List<Category> categories = category_service.getAllCategory();
+	      request.setAttribute("categories", categories);
+	      Page pages = book_service.findBookbyname_page(book_name);
+	      request.setAttribute("page", pages);
+		return SUCCESS;
+
+	}
 	public void detail()throws Exception{
 		HttpServletRequest request=ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();

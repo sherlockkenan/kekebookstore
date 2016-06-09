@@ -1,6 +1,7 @@
 package client;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,9 +33,10 @@ public class OrderAction  extends ActionSupport {
 	
 		try{
 			User user = (User)request.getSession().getAttribute("user");
-			String user_id=user.getId();
+			//String user_id=user.getId();
 			
-			List<Order> orders = order_service.Listorder(user_id);
+			//List<Order> orders = order_service.Listorder(user_id);
+			Set<Order> orders= user.getOrders();
 			request.setAttribute("orders", orders);
 		    return "list";
 			}catch(Exception e){
@@ -63,10 +65,10 @@ public class OrderAction  extends ActionSupport {
 			   
 				    return ERROR;
 			   }
-			   Order order=new Order();
-			   order.setUser(user);
-			
-			   order_service.createOrder(cart,order);
+			  // Order order=new Order();
+			   //order.setUser(user);
+			   ///user.getOrders().add(order);
+			   order_service.createOrder(cart,user);
 			   request.getSession().removeAttribute("cart");
 			   return "create";
 			}

@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import entity.Book;
+import entity.User;
 
 
 
@@ -38,6 +39,35 @@ private SessionFactory sessionFactory;
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public void update(Book book){
+		try{
+			Session session=sessionFactory.openSession();
+			Transaction ts= session.beginTransaction();
+			session.update(book);
+			ts.commit();
+			session.close();
+		} catch(Exception e){
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public List<Book> getall() {
+		   try{
+				
+				Session session=sessionFactory.openSession();
+				Transaction ts= session.beginTransaction();
+				String sql = "from Book ";
+				Query query=session.createQuery(sql);
+				List<Book> book=(List<Book>)query.list();
+				ts.commit();
+				session.close();
+				return book;
+			} catch(Exception e){
+				throw new RuntimeException(e);
+			}   
+		
+	    }
 	public void delete(String book_id){
 		try {
 			Session session=sessionFactory.openSession();
@@ -66,6 +96,22 @@ private SessionFactory sessionFactory;
 			String sql = "from Book where id=?";
 			Query query=session.createQuery(sql);
 			query.setString(0, id);
+			Book book=(Book)query.uniqueResult();
+			ts.commit();
+			session.close();
+			return book;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+	public Book findbyname(String name){
+		try {
+			Session session=sessionFactory.openSession();
+			Transaction ts= session.beginTransaction();
+			String sql = "from Book where name=?";
+			Query query=session.createQuery(sql);
+			query.setString(0, name);
 			Book book=(Book)query.uniqueResult();
 			ts.commit();
 			session.close();

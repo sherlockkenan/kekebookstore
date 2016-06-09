@@ -3,6 +3,8 @@ package admin;
 
 import java.sql.ResultSet;
 
+
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,6 +20,7 @@ import net.sf.json.JSONObject;
 import util.jdbcutils;
 
 import java.sql.Connection;
+import java.sql.Date;
 /**
  * Servlet implementation class SalestatisticAction
  */
@@ -75,6 +78,12 @@ public class SalestatisticAction  extends ActionSupport {
 
 	public void byday() throws Exception {
 		HttpServletResponse response = ServletActionContext.getResponse();
+		HttpServletRequest request= ServletActionContext.getRequest();
+		String search=(String) request.getParameter("search");
+		if(search!=null){
+			search();
+			return;
+		}
 		Connection conn=  jdbcutils.getConnection();
 		String sql ="select count(*) as num,date_format(ordertime, '%Y-%m-%d')as date from orders group by date_format(ordertime, '%Y-%m-%d') "
 				+ "order by num desc";
@@ -95,6 +104,7 @@ public class SalestatisticAction  extends ActionSupport {
 	public void bymonth() throws Exception {
 
 		HttpServletResponse response = ServletActionContext.getResponse();
+		
 		Connection conn=  jdbcutils.getConnection();
 		String sql ="select count(*) as num,date_format(ordertime, '%Y-%m')as date from orders group by date_format(ordertime, '%Y-%m')"
 			    +" order by num desc";
@@ -118,6 +128,58 @@ public class SalestatisticAction  extends ActionSupport {
 		Connection conn=  jdbcutils.getConnection();
 		String sql ="select count(*) as num,date_format(ordertime, '%Y')as date from orders group by date_format(ordertime, '%Y')"
 			    +" order by num desc";
+	    ResultSet rs= conn.createStatement().executeQuery(sql);
+		JSONArray jsonarry=new JSONArray();
+		JSONObject jsonobj=new JSONObject();
+	    while (rs.next()){
+	    	 jsonobj.put("date", rs.getString("date"));
+	    	 jsonobj.put("num", String.valueOf(rs.getInt("num")));
+	    	 jsonarry.add(jsonobj);
+	    }
+        
+	
+		response.getWriter().print(jsonarry);
+	
+	}
+	public void bybook() throws Exception {
+
+		HttpServletResponse response = ServletActionContext.getResponse();
+		Connection conn=  jdbcutils.getConnection();
+		String sql ="select book.id as id, name,COUNT(*)as num from orderitem join book on book.id=orderitem.book_id GROUP BY name ORDER BY num desc";
+	    ResultSet rs= conn.createStatement().executeQuery(sql);
+		JSONArray jsonarry=new JSONArray();
+		JSONObject jsonobj=new JSONObject();
+	    while (rs.next()){
+	    	jsonobj.put("id", rs.getString("id"));
+	    	 jsonobj.put("name", rs.getString("name"));
+	    	 jsonobj.put("num", String.valueOf(rs.getInt("num")));
+	    	 jsonarry.add(jsonobj);
+	    }
+        
+	
+		response.getWriter().print(jsonarry);
+	
+	}
+	public void search() throws Exception {
+
+		HttpServletResponse response = ServletActionContext.getResponse();
+		HttpServletRequest request= ServletActionContext.getRequest();
+	    String start_year= (String) request.getParameter("start_year");
+	    String start_month= (String) request.getParameter("start_month");
+	    String start_day= (String) request.getParameter("start_day");
+	    String end_year= (String) request.getParameter("end_year");
+	    String end_month= (String) request.getParameter("end_month");
+	    String end_day= (String) request.getParameter("end_day");
+
+	    String startdate = start_year+"-"+start_month+"-"+start_day; 
+	    String enddate=end_year+"-"+end_month+"-"+end_day;
+	    
+        Date start = Date.valueOf(startdate); 
+        Date end =Date.valueOf(enddate);
+
+		Connection conn=  jdbcutils.getConnection();
+		String sql ="select date_format(ordertime, '%Y-%m-%d')as date,count(*) as num from orders where ordertime>='"+start+"' and "   
+                    +"ordertime<'"+end+"' group by date_format(ordertime, '%Y-%m-%d') ORDER BY ordertime desc";
 	    ResultSet rs= conn.createStatement().executeQuery(sql);
 		JSONArray jsonarry=new JSONArray();
 		JSONObject jsonobj=new JSONObject();

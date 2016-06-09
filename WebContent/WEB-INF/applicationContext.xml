@@ -73,6 +73,7 @@
 
 <bean id="order_service" class="service.Order_service">
    <property name="orderdao" ref="orderdao" />
+    <property name="userdao" ref="userdao" />
 </bean>
 
 <bean id="book_service" class="service.Book_service">

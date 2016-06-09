@@ -14,6 +14,7 @@
    <link rel="stylesheet" href="../css/bootstrap.min.css">
   <script src="../jquery-easyui-1.4.5/jquery.min.js"></script>
   <script src="../jquery-easyui-1.4.5/bootstrap.min.js"></script>
+  
     <style>
  .navbar-fixed-left {
     width: 200px;
@@ -89,14 +90,17 @@
 	</script>
     
     <div id="header">
-            <%@include file="/client/head.jsp" %>
-            
+            <%@include file="/client/head.jsp" %>  
     </div>
+   
+     <form action="${pageContext.request.contextPath }/client/index_searchbook" method="post" class="form-wrapper cf">
+	  <input  type="text" name="book" placeholder="Search here..." required>
+	  <button type="submit">Search</button>
+    </form>
+    
     <div id="content" style="margin:0 auto;width:840px;">
-    	
-        
     	<div class="navbar navbar-inverse navbar-fixed-left" >
-
+          
           <ul class="nav navbar-nav" >
            <li><a href="#" style=" font-size: 20px;">Catergory</a>
            <c:forEach var="category" items="${categories }">

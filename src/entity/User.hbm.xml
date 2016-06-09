@@ -26,5 +26,11 @@
         <property name="role" type="java.lang.String">
             <column name="role" />
         </property>
+        <set name="orders" table="orders" inverse="true"  lazy="false">
+            <key>
+                <column name="user_id" />
+            </key>
+            <one-to-many class="entity.Order" />
+        </set>
     </class>
 </hibernate-mapping>

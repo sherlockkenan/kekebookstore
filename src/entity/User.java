@@ -1,5 +1,8 @@
 package entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class User {
 	private String id;
 	private String username;
@@ -8,7 +11,14 @@ public class User {
 	private String email;
 	private String address;
 	private String role;	
+	private Set<Order>  orders = new HashSet<Order>();
 	
+	public Set<Order> getOrders() {
+		return orders;
+	}
+	public void setOrders(Set<Order> orders) {
+		this.orders = orders;
+	}
 	public User(String id, String username, String password, String phone, String email,
 			String address, String role) {
 		this.id = id;

@@ -1,6 +1,9 @@
 package service;
 
+import java.util.ArrayList;
 import java.util.List;
+
+
 
 import dao.Bookdao;
 
@@ -55,6 +58,16 @@ public class Book_service {
 	 		return bookdao.find(bookid);
 	 	}
 	 	
+	 	public Page findBookbyname_page(String name){
+		 	
+	 		Book book= bookdao.findbyname(name);
+	 		List<Book> list=new ArrayList<Book>();
+	 		list.add(book);
+	 		Page page=new Page(1,1);
+	 		page.setList(list);
+	 		return page;
+	 	}
+	 	
 	 	public void buyBook(Cart cart,Book book){
 	 		cart.add(book);
 	 	}
@@ -70,5 +83,11 @@ public class Book_service {
 	 	public void deletebook(String book_id){
 	 		bookdao.delete(book_id);
 	 	}
+	 	public List<Book> getallbook() {
+			return bookdao.getall();
+		}
+	 	public void updatebook(Book book) {
+			bookdao.update(book);
+		}
 	 	
 }

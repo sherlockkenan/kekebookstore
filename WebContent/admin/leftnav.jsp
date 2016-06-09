@@ -54,7 +54,7 @@
    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Book<span class="caret"></span></a>
 		<ul class="dropdown-menu" role="menu">
 		 <li><a href="${pageContext.request.contextPath }/admin/book_addUI" target="right" onclick="event.stopPropagation()">Add Book</a></li>
-	     <li><a href="${pageContext.request.contextPath }/admin/book_list" target="right"onclick="event.stopPropagation()">View Book</a><li>
+	     <li><a href="${pageContext.request.contextPath }/admin/Bookmange.jsp" target="right"onclick="event.stopPropagation()">View Book</a><li>
 			
   	    </ul>
   </li>
@@ -70,6 +70,7 @@
 		<ul class="dropdown-menu" role="menu">
 		   <li><a href="${pageContext.request.contextPath }/admin/Salebyuser.jsp" target="right"onclick="event.stopPropagation()">By User</a></li>
 		   <li><a href="${pageContext.request.contextPath }/admin/SalebyCate.jsp" target="right"onclick="event.stopPropagation()">By Category</a></li>
+		    <li><a href="${pageContext.request.contextPath }/admin/Salebybook.jsp" target="right"onclick="event.stopPropagation()">By Book</a></li>
 		   <li class="divider"></li>
 	       <li><a href="${pageContext.request.contextPath }/admin/Salebyyear.jsp" target="right"onclick="event.stopPropagation()">By Year</a></li>
 		   <li><a href="${pageContext.request.contextPath }/admin/Salebymonth.jsp" target="right"onclick="event.stopPropagation()">By Month</a></li>

@@ -8,7 +8,7 @@
             <column name="id" />
             <generator class="assigned" />
         </id>
-        <property name="ordertime" type="java.util.Date">
+        <property name="ordertime" type="java.sql.Date">
             <column name="ordertime" />
         </property>
         <property name="price" type="double">

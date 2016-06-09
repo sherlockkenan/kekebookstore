@@ -18,8 +18,10 @@ import com.opensymphony.xwork2.ModelDriven;
 
 import entity.Book;
 import entity.User;
+import javassist.bytecode.stackmap.BasicBlock.Catch;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 import service.User_service;
 
 
@@ -44,7 +46,7 @@ public class UserAction extends ActionSupport {
 
 
 	public void get() throws Exception {
-	
+	try{
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
 		String username=request.getParameter("username");
@@ -54,10 +56,15 @@ public class UserAction extends ActionSupport {
 		}
 	
 		List<User> users=user_service.getalluser();
+		JsonConfig config = new JsonConfig();
+		config.setExcludes(new String[]{"orders"});
+		String jsonstr = JSONArray.fromObject(users, config).toString();
 		
-		String jsonobjstr=JSONArray.fromObject(users).toString();
-		response.getWriter().print(jsonobjstr);
-
+		response.getWriter().print(jsonstr);
+	}
+	catch(Exception e){
+		throw new RuntimeException(e);
+	}
 	}
 	
 	

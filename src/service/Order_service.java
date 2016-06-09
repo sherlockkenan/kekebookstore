@@ -1,20 +1,30 @@
 package service;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import dao.Orderdao;
+import dao.Userdao;
 import entity.Cart;
 import entity.CartItem;
 import entity.Order;
 import entity.OrderItem;
+import entity.User;
 
 public class Order_service {
 	  private Orderdao orderdao;
-	
-	  public Orderdao getOrderdao() {
+	  private Userdao userdao;
+	  public Userdao getUserdao() {
+		return userdao;
+	}
+
+	public void setUserdao(Userdao userdao) {
+		this.userdao = userdao;
+	}
+
+	public Orderdao getOrderdao() {
 	    return orderdao;
 	  }
 
@@ -22,12 +32,15 @@ public class Order_service {
 		this.orderdao = orderdao;
 	 }
 
-		public void createOrder(Cart cart,Order order){
+		public void createOrder(Cart cart,User user){
+			Order order=new Order();
+			order.setUser(user);
 	 		String id=UUID.randomUUID().toString();
 	 		order.setId(id);
 	 		order.setPrice(cart.getPrice());
 	 		order.setState(false);
-	 		order.setOrdertime(new Date());
+	 		Date date=new Date(new java.util.Date().getTime());
+	 		order.setOrdertime(date);
 	 		
 	 		for(Map.Entry<String, CartItem> me : cart.getMap().entrySet()){
 			
@@ -39,8 +52,9 @@ public class Order_service {
 				oitem.setQuantity(citem.getQuantity());
 				order.getOrderitems().add(oitem);
 			}
-	 		
-			orderdao.add(order);
+	 		user.getOrders().add(order);
+	 	    userdao.update(user);
+			//orderdao.add(order);
 	 	}
 
 	 	// list the all order

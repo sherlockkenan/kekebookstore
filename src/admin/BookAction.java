@@ -10,9 +10,7 @@ import java.util.UUID;
 
 
 import javax.servlet.http.HttpServletRequest;
-
-
-
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 
@@ -20,6 +18,9 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
 import entity.*;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 import service.*;
 
 public class BookAction extends ActionSupport implements ModelDriven<Book> {
@@ -116,7 +117,60 @@ public class BookAction extends ActionSupport implements ModelDriven<Book> {
 		return "delete";
 		// list(request, response);
 	}
+	public void get() throws Exception {
+		try{
+			HttpServletRequest request = ServletActionContext.getRequest();
+			HttpServletResponse response = ServletActionContext.getResponse();
+			
+		
+			List<Book> book=book_service.getallbook();
+			
+			String jsonstr = JSONArray.fromObject(book).toString();
+			
+			response.getWriter().print(jsonstr);
+		}
+		catch(Exception e){
+			throw new RuntimeException(e);
+		}
+	}
+	public  void update() throws Exception {
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		String name = request.getParameter("name");
+		double price = Double.valueOf(request.getParameter("price"));
+		String author = request.getParameter("author");
+		String description = request.getParameter("description");
+		String image = request.getParameter("image");
+		String category_id = request.getParameter("category_id");
+		String id = request.getParameter("id");
+        Book book = new Book(id, name,author,price,image,description,category_id);
 
+		try {
+			book_service.updatebook(book);
+			JSONObject jsonobj=new JSONObject();
+			jsonobj=JSONObject.fromObject(book);
+			response.getWriter().print(jsonobj.toString());
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			request.setAttribute("message", "update error");
+			request.getRequestDispatcher("/message.jsp").forward(request, response);
+		}
+
+	}
+	public void delete1() throws Exception {
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
+	
+		
+		String book_id = request.getParameter("id");
+		book_service.deletebook(book_id);
+	
+		JSONObject jsonobj=new JSONObject();
+		jsonobj.put("success", true);
+		response.getWriter().print(jsonobj.toString());
+
+	}
 	@Override
 	public Book getModel() {
 		// TODO Auto-generated method stub
