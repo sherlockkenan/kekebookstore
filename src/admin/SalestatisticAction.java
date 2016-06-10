@@ -33,6 +33,12 @@ public class SalestatisticAction  extends ActionSupport {
 	public void byuser() throws Exception {
 
 		HttpServletResponse response = ServletActionContext.getResponse();
+		HttpServletRequest request= ServletActionContext.getRequest();
+		String search=(String) request.getParameter("search");
+		if(search!=null){
+			usersearch();
+			return;
+		}
 		Connection conn=  jdbcutils.getConnection();
 		String sql = "select user.username,user.id, temp.num from user natural join "
 				+ "(select user_id as id,count(*)as num from orders group by user_id) as temp order by temp.num desc";
@@ -54,6 +60,12 @@ public class SalestatisticAction  extends ActionSupport {
 	public void bycategory() throws Exception {
 
 		HttpServletResponse response = ServletActionContext.getResponse();
+		HttpServletRequest request= ServletActionContext.getRequest();
+		String search=(String) request.getParameter("search");
+		if(search!=null){
+			catesearch();
+			return;
+		}
 		Connection conn=  jdbcutils.getConnection();
 		String sql ="select category.id,category.name,num "+
 				    "from category natural join "+
@@ -81,7 +93,7 @@ public class SalestatisticAction  extends ActionSupport {
 		HttpServletRequest request= ServletActionContext.getRequest();
 		String search=(String) request.getParameter("search");
 		if(search!=null){
-			search();
+			daysearch();
 			return;
 		}
 		Connection conn=  jdbcutils.getConnection();
@@ -144,6 +156,12 @@ public class SalestatisticAction  extends ActionSupport {
 	public void bybook() throws Exception {
 
 		HttpServletResponse response = ServletActionContext.getResponse();
+		HttpServletRequest request= ServletActionContext.getRequest();
+		String search=(String) request.getParameter("search");
+		if(search!=null){
+			booksearch();
+			return;
+		}
 		Connection conn=  jdbcutils.getConnection();
 		String sql ="select book.id as id, name,COUNT(*)as num from orderitem join book on book.id=orderitem.book_id GROUP BY name ORDER BY num desc";
 	    ResultSet rs= conn.createStatement().executeQuery(sql);
@@ -160,7 +178,7 @@ public class SalestatisticAction  extends ActionSupport {
 		response.getWriter().print(jsonarry);
 	
 	}
-	public void search() throws Exception {
+	public void daysearch() throws Exception {
 
 		HttpServletResponse response = ServletActionContext.getResponse();
 		HttpServletRequest request= ServletActionContext.getRequest();
@@ -179,7 +197,7 @@ public class SalestatisticAction  extends ActionSupport {
 
 		Connection conn=  jdbcutils.getConnection();
 		String sql ="select date_format(ordertime, '%Y-%m-%d')as date,count(*) as num from orders where ordertime>='"+start+"' and "   
-                    +"ordertime<'"+end+"' group by date_format(ordertime, '%Y-%m-%d') ORDER BY ordertime desc";
+                    +"ordertime<='"+end+"' group by date_format(ordertime, '%Y-%m-%d') ORDER BY ordertime desc";
 	    ResultSet rs= conn.createStatement().executeQuery(sql);
 		JSONArray jsonarry=new JSONArray();
 		JSONObject jsonobj=new JSONObject();
@@ -194,4 +212,55 @@ public class SalestatisticAction  extends ActionSupport {
 	
 	}
 	
+	public void usersearch() throws Exception {
+		HttpServletResponse response = ServletActionContext.getResponse();
+		HttpServletRequest request= ServletActionContext.getRequest();
+		String username= (String) request.getParameter("username");
+		String sql ="select byuser('"+username+"') as num";
+		
+		Connection conn=  jdbcutils.getConnection();
+        ResultSet rs= conn.createStatement().executeQuery(sql);
+	    JSONArray jsonarry=new JSONArray();
+	    JSONObject jsonobj=new JSONObject();
+        while (rs.next()){
+    	    jsonobj.put("username", username);
+    	    jsonobj.put("num", String.valueOf(rs.getInt("num")));
+    	    jsonarry.add(jsonobj);
+        }
+    	response.getWriter().print(jsonarry);
+	}
+	public void booksearch() throws Exception {
+		HttpServletResponse response = ServletActionContext.getResponse();
+		HttpServletRequest request= ServletActionContext.getRequest();
+		String bookname= (String) request.getParameter("bookname");
+		String sql ="select bybook('"+bookname+"') as num";
+		
+		Connection conn=  jdbcutils.getConnection();
+        ResultSet rs= conn.createStatement().executeQuery(sql);
+	    JSONArray jsonarry=new JSONArray();
+	    JSONObject jsonobj=new JSONObject();
+        while (rs.next()){
+    	    jsonobj.put("name", bookname);
+    	    jsonobj.put("num", String.valueOf(rs.getInt("num")));
+    	    jsonarry.add(jsonobj);
+        }
+    	response.getWriter().print(jsonarry);
+	}
+	public void catesearch() throws Exception {
+		HttpServletResponse response = ServletActionContext.getResponse();
+		HttpServletRequest request= ServletActionContext.getRequest();
+		String catename= (String) request.getParameter("categoryname");
+		String sql ="select bycate('"+catename+"') as num";
+		
+		Connection conn=  jdbcutils.getConnection();
+        ResultSet rs= conn.createStatement().executeQuery(sql);
+	    JSONArray jsonarry=new JSONArray();
+	    JSONObject jsonobj=new JSONObject();
+        while (rs.next()){
+    	    jsonobj.put("name", catename);
+    	    jsonobj.put("num", String.valueOf(rs.getInt("num")));
+    	    jsonarry.add(jsonobj);
+        }
+    	response.getWriter().print(jsonarry);
+	}
 }

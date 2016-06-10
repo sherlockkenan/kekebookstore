@@ -149,8 +149,12 @@ public class UserAction extends ActionSupport {
 	    List<User>userlist=new ArrayList<User>();
 		userlist.add(user);
 		
+		
         JSONArray jsonArray=new JSONArray();
-		jsonArray=JSONArray.fromObject(userlist);
+        JsonConfig config = new JsonConfig();
+		config.setExcludes(new String[]{"orders"});
+	
+		jsonArray=JSONArray.fromObject(userlist,config);
 		JSONObject rs=new JSONObject();
 		if(user==null)
 		{
@@ -159,6 +163,7 @@ public class UserAction extends ActionSupport {
 		else{
 			rs.put("total", 1);
 		}
+		
 		rs.put("rows",jsonArray);
 		response.getWriter().print(rs.toString());
 	}

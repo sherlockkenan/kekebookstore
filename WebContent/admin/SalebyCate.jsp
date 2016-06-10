@@ -8,6 +8,14 @@
     <script type="text/javascript" src="../jquery-easyui-1.4.5/jquery.min.js"></script>
     <script type="text/javascript" src="../jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="../jquery-easyui-1.4.5/jquery.edatagrid.js"></script>
+    <script type="text/javascript">
+        function doSearch(){
+            $('#dg').datagrid('load',{
+            	search: 'cate_search',
+            	categoryname: $('#categoryname').val(),
+            });
+        }
+    </script>
 </head>
 
 <body>
@@ -27,5 +35,12 @@
 	</tr>
 	</thead>
 </table>
+<div id="toolbar">
+    <div style="float:right;">
+         <input  id="categoryname" class="easyui-searchbox" data-options="prompt:'Input category',searcher:''" style="width:130px;vertical-align:middle;"></input>
+		<a href="#" class="easyui-linkbutton" plain="true" onclick="doSearch()">Search</a>
+    </div>
+
+</div>
 </body>
 </html>
