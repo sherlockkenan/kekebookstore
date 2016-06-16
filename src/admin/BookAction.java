@@ -143,7 +143,8 @@ public class BookAction extends ActionSupport implements ModelDriven<Book> {
 		String image = request.getParameter("image");
 		String category_id = request.getParameter("category_id");
 		String id = request.getParameter("id");
-        Book book = new Book(id, name,author,price,image,description,category_id);
+		int number = Integer.parseInt(request.getParameter("number"));
+        Book book = new Book(id, name,author,price,image,description,category_id,number);
 
 		try {
 			book_service.updatebook(book);

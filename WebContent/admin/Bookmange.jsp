@@ -47,6 +47,7 @@
           <th field="image" width="50" editor="text">Image</th>
           <th field="description" width="50" editor="text">Description</th>
           <th field="category_id" width="50" editor="text">Category_id</th>
+          <th field="number" width="50" editor="text">Number</th>
 	</tr>
     </thead>
 </table>

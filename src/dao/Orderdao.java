@@ -84,7 +84,7 @@ public class Orderdao {
 		try{
 			Session session=sessionFactory.openSession();
 			Transaction ts= session.beginTransaction();
-			String sql = "from Order where state=? and User.id=?";
+			String sql = "from Order where state=? and User.id=? ";
 			Query query=session.createQuery(sql);
 			query.setBoolean(0,state);
 			query.setString(0, userid);

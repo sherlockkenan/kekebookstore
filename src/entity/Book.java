@@ -22,7 +22,14 @@ public class Book {
 	private String image;//记住图片的名称
 	private String description;
 	private String category_id;//维护所属分类的id
+	private int number;
 	
+	public int getNumber() {
+		return number;
+	}
+	public void setNumber(int number) {
+		this.number = number;
+	}
 	public String getId() {
 		return id;
 	}
@@ -66,7 +73,7 @@ public class Book {
 		this.category_id = category_id;
 	}
 	public Book(String id, String name, String author, double price, String image, String description,
-			String category_id) {
+			String category_id,int number) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -75,6 +82,7 @@ public class Book {
 		this.image = image;
 		this.description = description;
 		this.category_id = category_id;
+		this.number=number;
 	}
 	public Book(){}
 }

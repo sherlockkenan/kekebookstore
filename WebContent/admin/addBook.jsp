@@ -40,6 +40,12 @@
     		</td>
     	</tr>
     	<tr>
+    		<td>数量</td>
+    		<td>
+    			<input type="text" name="number">
+    		</td>
+    	</tr>
+    	<tr>
     		<td>所属分类</td>
     		<td>
     			<select name="category_id">

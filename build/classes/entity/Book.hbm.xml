@@ -26,5 +26,8 @@
         <property name="category_id" type="java.lang.String">
             <column name="category_id" />
         </property>
+         <property name="number" type="int">
+            <column name="number" />
+        </property>
     </class>
 </hibernate-mapping>
