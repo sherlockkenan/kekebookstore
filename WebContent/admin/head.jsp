@@ -41,7 +41,7 @@
     <li><a href="${pageContext.request.contextPath }/client/cart.jsp" target="right">Cart</a></li>
 	 <li><a href="${pageContext.request.contextPath }/client/order" target="right">Orders</a></li>
     <c:if test="${user!=null }">
-       <li><a href="${pageContext.request.contextPath }/client/userprofile.jsp">Welcome:${user.username } </a></li>
+       <li><a href="${pageContext.request.contextPath }/client/profile.jsp">Welcome:${user.username } </a></li>
        <li><a href="${pageContext.request.contextPath }/logout" target="_top">Sign out</a></li>
 	</c:if>
 	 <c:if test="${user== null}">

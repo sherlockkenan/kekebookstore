@@ -43,7 +43,7 @@
 		</action>
 		
 		<action name="profile_*" method="{1}" class="client.ProfileAction">
-			<result >/client/userprofile.jsp</result>			
+			<result >/client/profile.jsp</result>			
 		</action>
 		
 		

@@ -73,37 +73,39 @@ public class ProfileAction extends ActionSupport {
 
 
 
-	public String imageedit() throws Exception {
-		DB database = mongodbutil.getdb();
+
+	public String profileedit()throws Exception{
+		
 		HttpServletRequest request = ServletActionContext.getRequest();
 		User user=(User) request.getSession().getAttribute("user");
 		
-		FileInputStream in = new FileInputStream(upload);
-		ByteArrayOutputStream out = new ByteArrayOutputStream(1024);
+	    if(upload!=null){
+	    	DB database = mongodbutil.getdb();
+			
+			
+			FileInputStream in = new FileInputStream(upload);
+			ByteArrayOutputStream out = new ByteArrayOutputStream(1024);
+			
+			byte[] temp = new byte[1024];
+
+			int size = 0;
+
+			while ((size = in.read(temp)) != -1) {
+				out.write(temp, 0, size);
+			}
+
+			in.close();
+			byte[]byteImg = out.toByteArray();
 		
-		byte[] temp = new byte[1024];
-
-		int size = 0;
-
-		while ((size = in.read(temp)) != -1) {
-			out.write(temp, 0, size);
-		}
-
-		in.close();
-		byte[]byteImg = out.toByteArray();
-	
-		DBCollection collection = database.getCollection("image");
-		collection.update(new BasicDBObject("user",user.getId()), new BasicDBObject("$set", new BasicDBObject("image",byteImg)),true,true); 
-		return SUCCESS;
-	}
-	public String useredit()throws Exception{
-		HttpServletRequest request=ServletActionContext.getRequest();		
+			DBCollection collection = database.getCollection("image");
+			collection.update(new BasicDBObject("user",user.getId()), new BasicDBObject("$set", new BasicDBObject("image",byteImg)),true,true); 
+	    }	
 		String password = request.getParameter("password");
 		String phone = request.getParameter("phone");
 		String email = request.getParameter("email");
 		String address = request.getParameter("address");
 
-        User user =(User) request.getSession().getAttribute("user");
+       
         user.setEmail(email);
         user.setPassword(password);
         user.setPhone(phone);
