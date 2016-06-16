@@ -54,7 +54,7 @@ public class Order_service {
 			}
 	 		user.getOrders().add(order);
 	 	    userdao.update(user);
-			//orderdao.add(order);
+			orderdao.add(order);
 	 	}
 
 	 	// list the all order
