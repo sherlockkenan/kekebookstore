@@ -7,7 +7,7 @@
   </head>
   
   <body>
-  <form action="${pageContext.request.contextPath }/admin/book_add" method="post" enctype="multipart/form-data" align="center">
+  <form action="http://192.168.16.130:8000/scenery/uploadfile" method="post" enctype="multipart/form-data" align="center">
     <table frame="border" width="50%" align="center">
     	<tr>
     		<td>图书名称</td>
